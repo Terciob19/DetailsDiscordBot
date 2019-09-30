@@ -16,20 +16,31 @@ botClient.on('ready', () => {
 botClient.on('message', function (user, userID, channelID, message, evt) 
 {
 
+    if (message.content === "!q")
+    {
+        botClient.sendMessage({
+            to: channelID,
+            message: '' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID
+        });
+    }
+
+    return;
+
     //the message isn't from the bot
     if (message.author.bot)
     { 
-        return;
+        //return;
     }
 
     //first letter isn't an exclamation point
     if (!message.content.startsWith('!')) 
     {
-        return;
+        //return;
     }
 
     //get category
     let channelCategory = message.channelCategory; //parent_id
+
     if (message.author === "Tercioo")
     {
         botClient.sendMessage({
