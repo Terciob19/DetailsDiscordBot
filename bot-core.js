@@ -1,27 +1,57 @@
 
 //grab the discord 'library'
-const Discord = require ("discord.js");
+const Discord = require ('discord.js');
 //make the bot client object
 const botClient = new Discord.Client();
 
+//categories
+const categoryDetails = 'Details! Damage Meter';
+
 //bot goes online
-botClient.on("ready", () => {
+botClient.on('ready', () => {
 
 })
 
 //events from the discord server
-botClient.on("message", msg=> {
+botClient.on('message', function (user, userID, channelID, message, evt) 
+{
 
-    //msg.channel.send(msg.channel)
-    //msg.channel.send(msg.channel.id)
+    //the message isn't from the bot
+    if (message.author.bot)
+    { 
+        return;
+    }
 
-    switch (msg.channel.parent)
+    //first letter isn't an exclamation point
+    if (!message.content.startsWith('!')) 
     {
-        case "Details! Damage Meter":
-            switch (msg.content)
+        return;
+    }
+
+    //get category
+    let channelCategory = message.channelCategory; //parent_id
+    if (message.author === "Tercioo")
+    {
+        botClient.sendMessage({
+            to: channelID,
+            message: '' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID
+        });
+    }
+    else
+    {
+        return;
+    }
+    
+    switch (channelCategory)
+    {
+        case categoryDetails:
+            switch (message.content)
             {
-                case "!faq":
-                    msg.channel.send("https://www.curseforge.com/wow/addons/details/pages/faq")
+                case '!faq':
+                    botClient.sendMessage({
+                        to: channelID,
+                        message: 'https://www.curseforge.com/wow/addons/details/pages/faq'
+                    });
                     break;
             }
     }
