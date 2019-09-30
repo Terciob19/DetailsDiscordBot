@@ -1,0 +1,12 @@
+{
+  "name": "DetailsBot",
+  "description": "Bot for Discord Servers",
+  "version": "1.0.0",
+  "main": "bot-core.js",
+  "scripts": {
+    "start": "node bot-core.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1",
+  }
+}

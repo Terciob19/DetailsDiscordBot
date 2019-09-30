@@ -1,2 +1,2 @@
 # DetailsDiscordBot
-Public Discord Bot, currently set to work with Heroku 
+Public Bot for Discord Servers.
