@@ -11,6 +11,10 @@ botClient.on("ready", () => {
 
 //events from the discord server
 botClient.on("message", msg=> {
+
+    msg.channel.send(msg.channel)
+    msg.channel.send(msg.channel.id)
+
     switch (msg.channel.parent)
     {
         case "Details! Damage Meter":
