@@ -18,6 +18,9 @@ botClient.on('message', function (user, userID, channelID, message, evt)
 
     if (message.content === "!q")
     {
+        message.reply ('' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID);
+        return;
+        
         botClient.sendMessage({
             to: channelID,
             message: '' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID
