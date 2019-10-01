@@ -23,11 +23,12 @@ botClient.on('message', function (message)
         let cagetoryId = message.channel.parentID; //get the category
         if (cagetoryId === categoryOtherAddons) //other addons
         {
-            //message.reply ('correct category!');
-            botClient.sendMessage({
-                to: message.channel,
-                message: 'Pong!'
-            });
+        //      message.reply ('correct category!');
+        //    botClient.sendMessage({
+        //      to: message.channel,
+        //       message: 'Pong!'
+        //    });
+        
         }
 
         return;
