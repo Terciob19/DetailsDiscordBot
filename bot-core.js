@@ -18,10 +18,10 @@ botClient.on('message', function (message)
 
     if (message.content === "!q")
     {
-        message.reply ('' + message.channel + ' ' + message.author + ' ' + message.guild);
+        message.reply ('' + message.channel + ' ' + message.author + ' ' + message.guild + ' ' + message.channel.parentID + ' ' + typeof (message.channel.parentID));
 
         let cagetoryId = message.channel.parentID; //get the category
-        if (cagetoryId === 503975658708402206) //other addons
+        if (cagetoryId === "503975658708402206") //other addons
         {
             message.reply ('correct category!');
         }
