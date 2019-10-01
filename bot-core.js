@@ -18,7 +18,14 @@ botClient.on('message', function (message)
 
     if (message.content === "!q")
     {
-        message.reply ('' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID);
+        message.reply ('' + message.channel + ' ' + message.author + ' ' + message.guild);
+
+        let cagetoryId = message.channel.parentID; //get the category
+        if (cagetoryId === 503975658708402206) //other addons
+        {
+            message.reply ('correct category!');
+        }
+
         return;
 
         botClient.sendMessage({
