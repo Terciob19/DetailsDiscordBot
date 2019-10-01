@@ -6,6 +6,8 @@ const botClient = new Discord.Client();
 
 //categories
 const categoryOtherAddons = "503975658708402206";
+const categoryPlaterNameplates = "503974893558169611";
+const categoryDetailsDamageMeter = "503973116163391488";
 
 //bot goes online
 botClient.on('ready', () => {
@@ -15,72 +17,49 @@ botClient.on('ready', () => {
 //events from the discord server
 botClient.on('message', function (message) 
 {
-
-    if (message.content === "!q")
-    {
-        message.reply ('' + message.channel + ' ' + message.author + ' ' + message.guild + ' ' + message.channel.parentID + ' ' + typeof (message.channel.parentID));
-
-        let cagetoryId = message.channel.parentID; //get the category
-        if (cagetoryId === categoryOtherAddons) //other addons
-        {
-            message.channel.send ('hellow world')
-        //      message.reply ('correct category!');
-        //    botClient.sendMessage({
-        //      to: message.channel,
-        //       message: 'Pong!'
-        //    });
-
-        }
-
-        return;
-
-        botClient.sendMessage({
-            to: channelID,
-            message: '' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID
-        });
-    }
-
-    return;
-
     //the message isn't from the bot
     if (message.author.bot)
     { 
-        //return;
+        return;
     }
 
     //first letter isn't an exclamation point
     if (!message.content.startsWith('!')) 
     {
-        //return;
+        return;
     }
 
     //get category
-    let channelCategory = message.channelCategory; //parent_id
+    let cagetoryId = message.channel.parentID;
 
-    if (message.author === "Tercioo")
+    switch (cagetoryId)
     {
-        botClient.sendMessage({
-            to: channelID,
-            message: '' + message.channelCategory + ' ' + message.categoryDetails + ' ' + message.channelID + ' ' + message.user + ' ' + message.userID
-        });
-    }
-    else
-    {
-        return;
-    }
-    
-    switch (channelCategory)
-    {
-        case categoryDetails:
+        case categoryOtherAddons:
             switch (message.content)
             {
                 case '!faq':
-                    botClient.sendMessage({
-                        to: channelID,
-                        message: 'https://www.curseforge.com/wow/addons/details/pages/faq'
-                    });
+                    message.channel.send ('FAQ');
                     break;
             }
+            break;
+
+        case categoryPlaterNameplates:
+            switch (message.content)
+            {
+                case '!faq':
+                    message.channel.send ('https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq');
+                    break;
+            }
+            break;
+
+        case categoryDetailsDamageMeter:
+                switch (message.content)
+                {
+                    case '!faq':
+                        message.channel.send ('https://www.curseforge.com/wow/addons/details/pages/faq');
+                        break;
+                }
+                break;            
     }
 
 })
