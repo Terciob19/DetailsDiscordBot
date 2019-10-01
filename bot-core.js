@@ -5,7 +5,7 @@ const Discord = require ('discord.js');
 const botClient = new Discord.Client();
 
 //categories
-const categoryDetails = 'Details! Damage Meter';
+const categoryOtherAddons = "503975658708402206";
 
 //bot goes online
 botClient.on('ready', () => {
@@ -21,9 +21,13 @@ botClient.on('message', function (message)
         message.reply ('' + message.channel + ' ' + message.author + ' ' + message.guild + ' ' + message.channel.parentID + ' ' + typeof (message.channel.parentID));
 
         let cagetoryId = message.channel.parentID; //get the category
-        if (cagetoryId === "503975658708402206") //other addons
+        if (cagetoryId === categoryOtherAddons) //other addons
         {
-            message.reply ('correct category!');
+            //message.reply ('correct category!');
+            botClient.sendMessage({
+                to: message.channel,
+                message: 'Pong!'
+            });
         }
 
         return;
