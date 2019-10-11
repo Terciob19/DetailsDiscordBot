@@ -56,7 +56,15 @@ botClient.on('message', function (message)
                 switch (message.content)
                 {
                     case '!faq':
-                        message.channel.send ('https://www.curseforge.com/wow/addons/details/pages/faq');
+                        message.channel.send ('FAQ! https://www.curseforge.com/wow/addons/details/pages/faq');
+                        break;
+
+                    case '!aggro':
+                        message.channel.send ('Hellow :) how to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg');
+                        break;
+
+                    case '!classic':
+                        message.channel.send ('Hellow :) here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow');
                         break;
                 }
                 break;            
