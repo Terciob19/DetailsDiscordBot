@@ -54,7 +54,7 @@ botClient.on('message', function (message)
                     message.channel.send (`Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
 Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
 Both Details and Plater need to be in the correct version for your WoW installation.
-Newer Plater versions support the following chat command to get version information: \`/run Plater.GetVersionInfo(true)\`
+Newer Plater versions support the following chat command to get version information: \`/plater version\`
 Please provide this version info, if available.`
                     );
                     break;
