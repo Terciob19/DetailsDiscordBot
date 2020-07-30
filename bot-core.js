@@ -82,5 +82,5 @@ Please provide this version info, if available.`
 })
 
 //token for the login process
-botClient.login(process.env.tokenId);
+botClient.login(process.env.TOKENID);
 
