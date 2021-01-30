@@ -9,7 +9,8 @@ const categoryOtherAddons = "503975658708402206";
 const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
 
-function getUserFromMention(mention) {
+function getUserFromMention(mention) 
+{
 	if (!mention) return;
 
 	if (mention.startsWith('<@') && mention.endsWith('>')) {
@@ -22,6 +23,19 @@ function getUserFromMention(mention) {
 		return botClient.users.get(mention);
 	}
 }
+
+function sendMessage(message, textToSend, user)
+{
+    if (user)
+    {
+        return message.channel.send(`${user} ${textToSend}`);
+    }
+    else
+    {
+        return message.channel.send(`${textToSend}`);
+    }
+}
+
 
 //bot goes online
 botClient.on('ready', () => {
@@ -53,25 +67,11 @@ botClient.on('message', function (message)
     switch (message.channel.parentID)
     {
         case categoryOtherAddons:
-            //debug prints
-            //message.channel.send(`withoutPrefix: ${withoutPrefix}`);
-            //message.channel.send(`split: ${split}`);
-            //message.channel.send(`command: ${command}`);
-            //message.channel.send(`targetUser: ${targetUser}`);
-            //message.channel.send(`user: ${user}`);
 
             switch (command)
             {
                 case 'faq':
-                    if (user)
-                    {
-                        return message.channel.send(`${user} https://www.curseforge.com/wow/addons/details/pages/faq`);
-                    }
-                    else
-                    {
-                        return message.channel.send('FAQ');
-                    }
-                    break;
+                    sendMessage(message, `https://www.curseforge.com/wow/addons/details/pages/faq`, user);
             }
             break;
 
