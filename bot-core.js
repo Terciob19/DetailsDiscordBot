@@ -19,7 +19,7 @@ function getUserFromMention(mention) {
 			mention = mention.slice(1);
 		}
 
-		return botClient.users.cache.get(mention);
+		return botClient.users.get(mention);
 	}
 }
 
