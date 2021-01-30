@@ -45,16 +45,25 @@ botClient.on('message', function (message)
 
     //get category
     const cagetoryId = message.channel.parentID;
-    const msgText = message.content;
+
     const withoutPrefix = message.content.slice(1);
     const split = withoutPrefix.split(/ +/);
     const command = split[0];
     const targetUser = split[1];
     const user = getUserFromMention(targetUser);
 
+    
+
     switch (cagetoryId)
     {
         case categoryOtherAddons:
+
+            message.channel.send(`withoutPrefix: ${withoutPrefix}`);
+            message.channel.send(`split: ${split}`);
+            message.channel.send(`command: ${command}`);
+            message.channel.send(`targetUser: ${targetUser}`);
+            message.channel.send(`user: ${user}`);
+
             switch (command)
             {
                 case 'faq':
