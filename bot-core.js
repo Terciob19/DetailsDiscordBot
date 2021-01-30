@@ -76,7 +76,7 @@ botClient.on('message', function (message)
             break;
 
         case categoryPlaterNameplates:
-            switch (message.content)
+            switch (command)
             {
                 case 'faq':
                     message.channel.send ('https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq');
@@ -94,7 +94,7 @@ Please provide this version info, if available.`
             break;
 
         case categoryDetailsDamageMeter:
-                switch (message.content)
+                switch (command)
                 {
                     case 'faq':
                         message.channel.send ('FAQ! https://www.curseforge.com/wow/addons/details/pages/faq');
