@@ -19,7 +19,7 @@ function getUserFromMention(mention) {
 			mention = mention.slice(1);
 		}
 
-		return client.users.cache.get(mention);
+		return botClient.users.cache.get(mention);
 	}
 }
 
@@ -44,17 +44,13 @@ botClient.on('message', function (message)
     }
 
     //get category
-    const cagetoryId = message.channel.parentID;
-
     const withoutPrefix = message.content.slice(1);
     const split = withoutPrefix.split(/ +/);
     const command = split[0];
     const targetUser = split[1];
     const user = getUserFromMention(targetUser);
 
-    
-
-    switch (cagetoryId)
+    switch (message.channel.parentID)
     {
         case categoryOtherAddons:
 
