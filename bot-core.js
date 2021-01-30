@@ -67,7 +67,6 @@ botClient.on('message', function (message)
     switch (message.channel.parentID)
     {
         case categoryOtherAddons:
-
             switch (command)
             {
                 case 'faq':
@@ -79,17 +78,14 @@ botClient.on('message', function (message)
             switch (command)
             {
                 case 'faq':
-                    message.channel.send ('https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq');
-                    break;
+                    return sendMessage(message, `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`, user);
 				
                 case 'version':
-                    message.channel.send (`Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
-Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
-Both Details and Plater need to be in the correct version for your WoW installation.
-Newer Plater versions support the following chat command to get version information: \`/plater version\`
-Please provide this version info, if available.`
-                    );
-                    break;
+                    return sendMessage(message, `Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
+                    Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
+                    Both Details and Plater need to be in the correct version for your WoW installation.
+                    Newer Plater versions support the following chat command to get version information: \`/plater version\`
+                    Please provide this version info, if available.`, user);
             }
             break;
 
@@ -97,22 +93,28 @@ Please provide this version info, if available.`
                 switch (command)
                 {
                     case 'faq':
-                        message.channel.send ('FAQ! https://www.curseforge.com/wow/addons/details/pages/faq');
-                        break;
+                        return sendMessage(message, 'FAQ! https://www.curseforge.com/wow/addons/details/pages/faq', user);
 
                     case 'aggro':
-                        message.channel.send ('Hellow :) how to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg');
-                        break;
+                        return sendMessage(message, 'How to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg', user);
 
                     case 'classic':
-                        message.channel.send ('Hellow :) here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow');
-                        break;
+                        return sendMessage(message, 'here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow', user);
+                    
+                    case 'nickname':
+                        return sendMessage(message, `There's no more support for nicknames, update Details! and disable any weakaura modifiers for nicknames.`, user);
+
+                    case 'elvui':
+                        return sendMessage(message, `Go to ElvUI AddonsSkins options and disable chat embed.`, user);
+                    
+                    case 'mythic':
+                        return sendMessage(message, `Go to options; Mythic Dungeon section; Enable 'Make Overall Segment' and 'Merge Trash' also increase the amount of segments under Display section.`, user);
+
                 }
                 break;            
     }
 
 })
-
 
 
 //token for the login process
