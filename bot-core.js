@@ -53,19 +53,19 @@ botClient.on('message', function (message)
     switch (message.channel.parentID)
     {
         case categoryOtherAddons:
-
-            message.channel.send(`withoutPrefix: ${withoutPrefix}`);
-            message.channel.send(`split: ${split}`);
-            message.channel.send(`command: ${command}`);
-            message.channel.send(`targetUser: ${targetUser}`);
-            message.channel.send(`user: ${user}`);
+            //debug prints
+            //message.channel.send(`withoutPrefix: ${withoutPrefix}`);
+            //message.channel.send(`split: ${split}`);
+            //message.channel.send(`command: ${command}`);
+            //message.channel.send(`targetUser: ${targetUser}`);
+            //message.channel.send(`user: ${user}`);
 
             switch (command)
             {
                 case 'faq':
                     if (user)
                     {
-                        return message.channel.send(`${user.username} https://www.curseforge.com/wow/addons/details/pages/faq`);
+                        return message.channel.send(`${user} https://www.curseforge.com/wow/addons/details/pages/faq`);
                     }
                     else
                     {
