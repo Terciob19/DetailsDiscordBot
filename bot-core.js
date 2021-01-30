@@ -9,6 +9,20 @@ const categoryOtherAddons = "503975658708402206";
 const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
 
+function getUserFromMention(mention) {
+	if (!mention) return;
+
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.cache.get(mention);
+	}
+}
+
 //bot goes online
 botClient.on('ready', () => {
 
@@ -30,15 +44,28 @@ botClient.on('message', function (message)
     }
 
     //get category
-    let cagetoryId = message.channel.parentID;
+    const cagetoryId = message.channel.parentID;
+    const msgText = message.content;
+    const withoutPrefix = message.content.slice(1);
+    const split = withoutPrefix.split(/ +/);
+    const command = split[0];
+    const targetUser = split[1];
+    const user = getUserFromMention(targetUser);
 
     switch (cagetoryId)
     {
         case categoryOtherAddons:
-            switch (message.content)
+            switch (command)
             {
-                case '!faq':
-                    message.channel.send ('FAQ');
+                case 'faq':
+                    if (user)
+                    {
+                        return message.channel.send(`${user.username} https://www.curseforge.com/wow/addons/details/pages/faq`);
+                    }
+                    else
+                    {
+                        return message.channel.send('FAQ');
+                    }
                     break;
             }
             break;
@@ -46,11 +73,11 @@ botClient.on('message', function (message)
         case categoryPlaterNameplates:
             switch (message.content)
             {
-                case '!faq':
+                case 'faq':
                     message.channel.send ('https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq');
                     break;
 				
-                case '!version':
+                case 'version':
                     message.channel.send (`Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
 Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
 Both Details and Plater need to be in the correct version for your WoW installation.
@@ -64,15 +91,15 @@ Please provide this version info, if available.`
         case categoryDetailsDamageMeter:
                 switch (message.content)
                 {
-                    case '!faq':
+                    case 'faq':
                         message.channel.send ('FAQ! https://www.curseforge.com/wow/addons/details/pages/faq');
                         break;
 
-                    case '!aggro':
+                    case 'aggro':
                         message.channel.send ('Hellow :) how to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg');
                         break;
 
-                    case '!classic':
+                    case 'classic':
                         message.channel.send ('Hellow :) here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow');
                         break;
                 }
@@ -80,6 +107,8 @@ Please provide this version info, if available.`
     }
 
 })
+
+
 
 //token for the login process
 botClient.login(process.env.TOKENID);
