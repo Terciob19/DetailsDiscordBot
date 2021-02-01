@@ -102,10 +102,10 @@ botClient.on('message', function (message)
                         return sendMessage(message, 'here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow', user);
                     
                     case 'nickname':
-                        return sendMessage(message, `There's no more support for nicknames, update Details! and disable any weakaura modifiers for nicknames.`, user);
+                        return sendMessage(message, `Update Details! and disable any weakaura modifiers for nicknames (like Nickname Extender).`, user);
 
                     case 'elvui':
-                        return sendMessage(message, `Go to ElvUI AddonsSkins options and disable chat embed.`, user);
+                        return sendMessage(message, `Go to ElvUI; AddonsSkins Options; disable chat embed or reduce it to one window, depending on your problem.`, user);
                     
                     case 'mythic':
                         return sendMessage(message, `Go to options; Mythic Dungeon section; Enable 'Make Overall Segment' and 'Merge Trash' also increase the amount of segments under Display section.`, user);
