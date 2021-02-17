@@ -110,6 +110,9 @@ botClient.on('message', function (message)
                     case 'mythic':
                         return sendMessage(message, `Go to options; Mythic Dungeon section; Enable 'Make Overall Segment' and 'Merge Trash' also increase the amount of segments under Display section.`, user);
 
+                    case 'reinstall':
+                        return sendMessage(message, `Use the command '/details reinstall', or search for 'Details' in the WTF folder and delete all findings.`, user);
+
                 }
                 break;            
     }
