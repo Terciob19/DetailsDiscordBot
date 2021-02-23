@@ -86,6 +86,9 @@ botClient.on('message', function (message)
                     Both Details and Plater need to be in the correct version for your WoW installation.
                     Newer Plater versions support the following chat command to get version information: \`/plater version\`
                     Please provide this version info, if available.`, user);
+
+                case 'scale':
+                    return sendMessage(message, `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`, user);                    
             }
             break;
 
@@ -112,6 +115,10 @@ botClient.on('message', function (message)
 
                     case 'reinstall':
                         return sendMessage(message, `Use the command '/details reinstall', or search for 'Details' in the WTF folder and delete all findings.`, user);
+
+                    case 'scale':
+                        return sendMessage(message, `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`, user);
+
 
                 }
                 break;            
