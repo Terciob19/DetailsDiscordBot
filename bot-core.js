@@ -119,6 +119,9 @@ botClient.on('message', function (message)
                     case 'scale':
                         return sendMessage(message, `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`, user);
 
+                    case 'short':
+                        return sendMessage(message, `To modify how numbers are shown, go into the options; Display section; Modify the value of 'Number Format'.`, user);
+
 
                 }
                 break;            
