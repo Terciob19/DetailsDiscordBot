@@ -148,13 +148,13 @@ botClient.on('guildMemberRemove', async (member) => {
             limit: 1,
             type: 'MEMBER_KICK',
         });
-        const fetchedBanLogs = await guild.fetchAuditLogs({
+        const fetchedBanLogs = await member.guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_BAN_ADD',
         });
         
         const kickLog = await fetchedKickLogs.entries.first();
-        const banLog = await fetchedLogs.entries.first();
+        const banLog = await fetchedBanLogs.entries.first();
         console.log(kickLog)
         
         if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
