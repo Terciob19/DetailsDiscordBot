@@ -153,10 +153,10 @@ botClient.on('guildBanAdd', async (guild, user) => {
     }
 })
 
-botClient.on('guildMemberRemove', async (guild, user) => {
+botClient.on('guildMemberRemove', async (member) => {
     try {
-        const logs = guild.channels.get(modLogChannel);
-        logs.send(`${user.tag} was banned.`);
+        const logs = member.guild.channels.get(modLogChannel);
+        logs.send(`${member.user} was kicked? Or did he leave?.`);
         const fetchedLogs = await guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_KICK',
@@ -165,10 +165,10 @@ botClient.on('guildMemberRemove', async (guild, user) => {
         
         if (!kickLog) return
         const { executor, target, reason } = kickLog;
-        if (target.id === user.id) {
-            logs.send(`${user} - ${user.tag} was kicked by ${executor.tag} with reason: '${reason}'`);
+        if (target.id === member.id) {
+            logs.send(`${member.user} - ${member.user.tag} was kicked by ${executor.tag} with reason: '${reason}'`);
         } else {
-            logs.send(`${user} - ${user.tag} was kicked, audit log fetch was inconclusive.`);
+            logs.send(`${member.user} - ${member.user.tag} was kicked, audit log fetch was inconclusive.`);
         }
     } catch (error) {
         console.log(error);
