@@ -8,20 +8,22 @@ const botClient = new Discord.Client();
 const categoryOtherAddons = "503975658708402206";
 const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
+const categoryMods = "821051201142652948";
+const modLogChannel = "821051497525542923";
 
 function getUserFromMention(mention) 
 {
-	if (!mention) return;
+    if (!mention) return;
 
-	if (mention.startsWith('<@') && mention.endsWith('>')) {
-		mention = mention.slice(2, -1);
+    if (mention.startsWith('<@') && mention.endsWith('>')) {
+        mention = mention.slice(2, -1);
 
-		if (mention.startsWith('!')) {
-			mention = mention.slice(1);
-		}
+        if (mention.startsWith('!')) {
+            mention = mention.slice(1);
+        }
 
-		return botClient.users.get(mention);
-	}
+        return botClient.users.get(mention);
+    }
 }
 
 function sendMessage(message, textToSend, user)
@@ -79,7 +81,7 @@ botClient.on('message', function (message)
             {
                 case 'faq':
                     return sendMessage(message, `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`, user);
-				
+                
                 case 'version':
                     return sendMessage(message, `Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
                     Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
@@ -127,6 +129,32 @@ botClient.on('message', function (message)
                 break;            
     }
 
+})
+
+botClient.on('guildBanAdd', function (guild, user) 
+{
+    const logs = botClient.channels.get(modLogChannel);
+    const fetchedLogs = await guild.fetchAuditLogs({
+        limit: 1,
+        type: 'MEMBER_BAN_ADD',
+    });
+    // Since we only have 1 audit log entry in this collection, we can simply grab the first one
+    const banLog = fetchedLogs.entries.first();
+
+    // Let's perform a coherence check here and make sure we got *something*
+    if (!banLog) return logs.send(`${user} - ${user.tag} was banned, but no audit log could be found.`);
+
+    // We now grab the user object of the person who banned the user
+    // Let us also grab the target of this action to double check things
+    const { executor, target, reason } = banLog;
+
+    // And now we can update our output with a bit more information
+    // We will also run a check to make sure the log we got was for the same kicked member
+    if (target.id === user.id) {
+        logs.send(`${user} - ${user.tag} was banned by ${executor.tag} for '${reason}'`);
+    } else {
+        logs.send(`${user} - ${user.tag} was banned, audit log fetch was inconclusive.`);
+    }
 })
 
 
