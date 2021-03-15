@@ -42,8 +42,8 @@ function sendMessage(message, textToSend, user)
 //bot goes online
 botClient.on('ready', () => {
     console.log("I am ready!");
-    botClient.channels.get(modLogChannel)
-    .then(channel => console.log(channel.name));
+    const channel = botClient.channels.get(modLogChannel)
+    console.log(channel.name);
     
 })
 
