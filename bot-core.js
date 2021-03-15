@@ -132,7 +132,7 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guild, user) => {
-    console.log(`guildBanAdd: ${guild}, ${user}`);
+    //console.log(`guildBanAdd: ${guild}, ${user}`);
     try {
         const logs = guild.channels.get(modLogChannel);
         const fetchedLogs = await guild.fetchAuditLogs({
@@ -141,12 +141,12 @@ botClient.on('guildBanAdd', async (guild, user) => {
         });
         const banLog = await fetchedLogs.entries.first();
         
-        if (!banLog) return logs.send(`${user} - ${user.tag} was banned, but no audit log could be found.`);
+        if (!banLog) return logs.send(`${user}/${user.tag} was banned, but no audit log could be found.`);
         const { executor, target, reason } = banLog;
         if (target.id === user.id) {
-            logs.send(`${user} - ${user.tag} was banned by ${executor.tag} with reason: '${reason}'`);
+            logs.send(`${user}/${user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
         } else {
-            logs.send(`${user} - ${user.tag} was banned, audit log fetch was inconclusive.`);
+            logs.send(`${user}/${user.tag} was banned, audit log fetch was inconclusive.`);
         }
     } catch (error) {
         console.log(error);
@@ -154,10 +154,9 @@ botClient.on('guildBanAdd', async (guild, user) => {
 })
 
 botClient.on('guildMemberRemove', async (member) => {
-    console.log(`guildMemberRemove: ${guild}, ${user}`);
+    //console.log(`guildMemberRemove: ${guild}, ${user}`);
     try {
         const logs = member.guild.channels.get(modLogChannel);
-        logs.send(`${member.user} was kicked? Or did he leave?.`);
         const fetchedLogs = await guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_KICK',
@@ -167,9 +166,9 @@ botClient.on('guildMemberRemove', async (member) => {
         if (!kickLog) return
         const { executor, target, reason } = kickLog;
         if (target.id === member.id) {
-            logs.send(`${member.user} - ${member.user.tag} was kicked by ${executor.tag} with reason: '${reason}'`);
+            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
         } else {
-            logs.send(`${member.user} - ${member.user.tag} was kicked, audit log fetch was inconclusive.`);
+            logs.send(`${member.user}/${member.user.tag} was kicked, audit log fetch was inconclusive.`);
         }
     } catch (error) {
         console.log(error);
