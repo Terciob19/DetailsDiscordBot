@@ -30,11 +30,11 @@ function sendMessage(message, textToSend, user)
 {
     if (user)
     {
-        return message.channel.send(`${user} ${textToSend}`);
+        return message.channel.send(`${user} ${textToSend}`).catch((err) => { console.log(err) });
     }
     else
     {
-        return message.channel.send(`${textToSend}`);
+        return message.channel.send(`${textToSend}`).catch((err) => { console.log(err) });;
     }
 }
 
@@ -132,9 +132,9 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guild, user) => {
+    console.log(`guildBanAdd: ${guild}, ${user}`);
     try {
         const logs = guild.channels.get(modLogChannel);
-        logs.send(`${user.tag} was banned.`);
         const fetchedLogs = await guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_BAN_ADD',
@@ -154,6 +154,7 @@ botClient.on('guildBanAdd', async (guild, user) => {
 })
 
 botClient.on('guildMemberRemove', async (member) => {
+    console.log(`guildMemberRemove: ${guild}, ${user}`);
     try {
         const logs = member.guild.channels.get(modLogChannel);
         logs.send(`${member.user} was kicked? Or did he leave?.`);
