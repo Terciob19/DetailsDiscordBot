@@ -142,7 +142,6 @@ botClient.on('message', function (message)
 
 botClient.on('guildMemberRemove', async (member) => {
     //console.log(`guildMemberRemove: ${member}`);
-    console.log(member)
     try {
         const logs = await botClient.channels.fetch(modLogChannel);
         const fetchedKickLogs = await member.guild.fetchAuditLogs({
@@ -156,13 +155,9 @@ botClient.on('guildMemberRemove', async (member) => {
         
         const kickLog = await fetchedKickLogs.entries.first();
         const banLog = await fetchedBanLogs.entries.first();
-        console.log(kickLog)
-        console.log(kickLog.createdAt)
-        console.log(banLog)
-        console.log(banLog.createdAt)
         
         if (kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
-            const { executor, target, reason } = kickLog;
+            var { executor, target, reason } = kickLog;
             if (!reason) reason = '<No reason given>';
             if (target.id === member.id) {
                 logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
@@ -170,7 +165,7 @@ botClient.on('guildMemberRemove', async (member) => {
                 logs.send(`${member.user}/${member.user.tag} was kicked, audit log fetch was inconclusive.`);
             }
         } else if (banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
-            const { executor, target, reason } = banLog;
+            var { executor, target, reason } = banLog;
             if (!reason) reason = '<No reason given>';
             if (target.id === member.user.id) {
                 logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
