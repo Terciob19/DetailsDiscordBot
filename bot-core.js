@@ -131,7 +131,7 @@ botClient.on('message', function (message)
 
 })
 
-botClient.on('guildBanAdd', function (guild, user) { 
+botClient.on('guildBanAdd', async (guild, user) => {
     console.log(`guildBanAdd: ${guild}, ${user}`);
     const logs = botClient.channels.get(modLogChannel);
     console.log(`logs: ${logs}`);
@@ -141,7 +141,7 @@ botClient.on('guildBanAdd', function (guild, user) {
     });
     console.log(`fetchedLogs: ${fetchedLogs}`);
     // Since we only have 1 audit log entry in this collection, we can simply grab the first one
-    const banLog = fetchedLogs.entries.first();
+    const banLog = await fetchedLogs.entries.first();
     console.log(`banLog: ${banLog}`);
 
     // Let's perform a coherence check here and make sure we got *something*
