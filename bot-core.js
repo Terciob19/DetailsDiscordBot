@@ -5,7 +5,7 @@
 //const botClient = new Discord.Client();
 
 //grab the discord 'library'
-const Client, Intents = require ('discord.js');
+const { Client, Intents } = require ('discord.js');
 //make the bot client object and register intents (events)
 const myIntents = new Intents();
 myIntents.add('GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_BANS');
