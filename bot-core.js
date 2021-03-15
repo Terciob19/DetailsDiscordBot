@@ -140,45 +140,39 @@ botClient.on('message', function (message)
 
 })
 
-botClient.on('guildBanAdd', async (guild, user) => {
-    //console.log(`guildBanAdd: ${guild}, ${user}`);
-    try {
-        const logs = await botClient.channels.fetch(modLogChannel);
-        const fetchedLogs = await guild.fetchAuditLogs({
-            limit: 1,
-            type: 'MEMBER_BAN_ADD',
-        });
-        const banLog = await fetchedLogs.entries.first();
-        
-        if (!banLog) return logs.send(`${user}/${user.tag} was banned, but no audit log could be found.`);
-        const { executor, target, reason } = banLog;
-        if (target.id === user.id) {
-            logs.send(`${user}/${user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
-        } else {
-            logs.send(`${user}/${user.tag} was banned, audit log fetch was inconclusive.`);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-})
-
 botClient.on('guildMemberRemove', async (member) => {
     console.log(`guildMemberRemove: ${member}`);
     try {
         const logs = await botClient.channels.fetch(modLogChannel);
-        const fetchedLogs = await member.guild.fetchAuditLogs({
+        const fetchedKickLogs = await member.guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_KICK',
         });
-        const kickLog = await fetchedLogs.entries.first();
+        const fetchedBanLogs = await guild.fetchAuditLogs({
+            limit: 1,
+            type: 'MEMBER_BAN_ADD',
+        });
+        
+        const kickLog = await fetchedKickLogs.entries.first();
+        const banLog = await fetchedLogs.entries.first();
         console.log(kickLog)
         
-        if (!kickLog) return
-        const { executor, target, reason } = kickLog;
-        if (target.id === member.id) {
-            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
-        } else {
-            logs.send(`${member.user}/${member.user.tag} was kicked, audit log fetch was inconclusive.`);
+        if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
+            const { executor, target, reason } = kickLog;
+            if (!reason) reason = '<No reason given>';
+            if (target.id === member.id) {
+                logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+            } else {
+                logs.send(`${member.user}/${member.user.tag} was kicked, audit log fetch was inconclusive.`);
+            }
+        } else if (banLog && banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
+            const { executor, target, reason } = banLog;
+            if (!reason) reason = '<No reason given>';
+            if (target.id === user.id) {
+                logs.send(`${user}/${user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
+            } else {
+                logs.send(`${user}/${user.tag} was banned, audit log fetch was inconclusive.`);
+            }
         }
     } catch (error) {
         console.log(error);
