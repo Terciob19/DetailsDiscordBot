@@ -131,7 +131,7 @@ botClient.on('message', function (message)
 
 })
 
-botClient.on('guildBanAdd', function (guild, user) 
+botClient.on('guildBanAdd', async (guild, user) => { 
 {
     const logs = botClient.channels.get(modLogChannel);
     const fetchedLogs = await guild.fetchAuditLogs({
