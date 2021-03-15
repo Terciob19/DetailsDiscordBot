@@ -42,7 +42,7 @@ function sendMessage(message, textToSend, user)
 //bot goes online
 botClient.on('ready', () => {
     console.log("I am ready!");
-    botClient.channels.fetch(modLogChannel)
+    botClient.channels.get(modLogChannel)
     .then(channel => console.log(channel.name));
     
 })
@@ -136,7 +136,7 @@ botClient.on('message', function (message)
 
 botClient.on('guildBanAdd', async (guild, user) => { 
     console.log(`guildBanAdd: ${guild}, ${user}`);
-    const logs = botClient.channels.fetch(modLogChannel);
+    const logs = guild.channels.get(modLogChannel);
     console.log(`logs: ${logs}`);
     const fetchedLogs = await guild.fetchAuditLogs({
         limit: 1,
