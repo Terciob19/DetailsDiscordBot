@@ -132,31 +132,35 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guild, user) => {
-    const logs = guild.channels.get(modLogChannel);
-    logs.send(`${user.tag} was banned.`);
-    const fetchedLogs = await guild.fetchAuditLogs({
-        limit: 1,
-        type: 'MEMBER_BAN_ADD',
-    });
-    console.log(`fetchedLogs: ${fetchedLogs}`);
-    // Since we only have 1 audit log entry in this collection, we can simply grab the first one
-    const banLog = await fetchedLogs.entries.first();
-    console.log(`banLog: ${banLog}`);
+    try {
+        const logs = guild.channels.get(modLogChannel);
+        logs.send(`${user.tag} was banned.`);
+        const fetchedLogs = await guild.fetchAuditLogs({
+            limit: 1,
+            type: 'MEMBER_BAN_ADD',
+        });
+        console.log(`fetchedLogs: ${fetchedLogs}`);
+        // Since we only have 1 audit log entry in this collection, we can simply grab the first one
+        const banLog = await fetchedLogs.entries.first();
+        console.log(`banLog: ${banLog}`);
 
-    // Let's perform a coherence check here and make sure we got *something*
-    if (!banLog) return logs.send(`${user} - ${user.tag} was banned, but no audit log could be found.`);
+        // Let's perform a coherence check here and make sure we got *something*
+        if (!banLog) return logs.send(`${user} - ${user.tag} was banned, but no audit log could be found.`);
 
-    // We now grab the user object of the person who banned the user
-    // Let us also grab the target of this action to double check things
-    const { executor, target, reason } = banLog;
-    console.log(`data: ${executor}, ${target}, ${reason}`);
+        // We now grab the user object of the person who banned the user
+        // Let us also grab the target of this action to double check things
+        const { executor, target, reason } = banLog;
+        console.log(`data: ${executor}, ${target}, ${reason}`);
 
-    // And now we can update our output with a bit more information
-    // We will also run a check to make sure the log we got was for the same kicked member
-    if (target.id === user.id) {
-        logs.send(`${user} - ${user.tag} was banned by ${executor.tag} for '${reason}'`);
-    } else {
-        logs.send(`${user} - ${user.tag} was banned, audit log fetch was inconclusive.`);
+        // And now we can update our output with a bit more information
+        // We will also run a check to make sure the log we got was for the same kicked member
+        if (target.id === user.id) {
+            logs.send(`${user} - ${user.tag} was banned by ${executor.tag} for '${reason}'`);
+        } else {
+            logs.send(`${user} - ${user.tag} was banned, audit log fetch was inconclusive.`);
+        }
+    } catch (error) {
+        console.log(error);
     }
 })
 
