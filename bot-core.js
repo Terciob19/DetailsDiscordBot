@@ -1,10 +1,16 @@
 
 //grab the discord 'library'
-const Discord = require ('discord.js');
-//make the bot client object and register intents (events)
-//const botClient = new Discord.Client({ ws: { intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_BANS"] } });
-const botClient = new Discord.Client({ ws: { intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_BANS"] } });
+//const Discord = require ('discord.js');
+//make the bot client object
 //const botClient = new Discord.Client();
+
+//grab the discord 'library'
+const Client, Intents = require ('discord.js');
+//make the bot client object and register intents (events)
+const myIntents = new Intents();
+myIntents.add('GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_BANS');
+const botClient = new Client({ ws: { intents: myIntents } });
+
 
 //categories
 const categoryOtherAddons = "503975658708402206";
