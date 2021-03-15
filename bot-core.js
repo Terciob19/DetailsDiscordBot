@@ -159,19 +159,47 @@ botClient.on('guildMemberRemove', async (member) => {
         if (kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
             var { executor, target, reason } = kickLog;
             if (!reason) reason = '<No reason given>';
-            if (target.id === member.id) {
-                logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
-            } else {
-                logs.send(`${member.user}/${member.user.tag} was kicked, audit log fetch was inconclusive.`);
-            }
+            const embed = { // make embed
+                "title": ":hammer: Banned:",
+                "color": 11141120,
+                "thumbnail": {
+                    "url": member.user.displayAvatarURL()
+                },
+                "fields": [
+                    {
+                        "name": member.user.tag,
+                        "value": "(id: "+member.user.id+")"
+                    },
+                    {
+                        "name": "Has been ***BANNED*** from the server by "+executor.tag+" with reason:",
+                        "value": reason
+                    }
+                ]
+            };
+            logs.send({ embed })
+            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
         } else if (banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
             var { executor, target, reason } = banLog;
             if (!reason) reason = '<No reason given>';
-            if (target.id === member.user.id) {
-                logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
-            } else {
-                logs.send(`${member.user}/${member.user.tag} was banned, audit log fetch was inconclusive.`);
-            }
+            const embed = { // make embed
+                "title": ":boot: Kicked:",
+                "color": 11141120,
+                "thumbnail": {
+                    "url": member.user.displayAvatarURL()
+                },
+                "fields": [
+                    {
+                        "name": member.user.tag,
+                        "value": "(id: "+member.user.id+")"
+                    },
+                    {
+                        "name": "Has been ***KICKED*** from the server by "+executor.tag+" with reason:",
+                        "value": reason
+                    }
+                ]
+            };
+            logs.send({ embed })
+            logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
         }
     } catch (error) {
         console.log(error);
