@@ -2,7 +2,7 @@
 //grab the discord 'library'
 const Discord = require ('discord.js');
 //make the bot client object and register intents (events)
-const intents = ["GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_BANS"];
+const intents = ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_BANS"];
 const botClient = new Discord.Client({intents: intents, ws:{intents: intents}});
 
 //categories
@@ -42,7 +42,7 @@ function sendMessage(message, textToSend, user)
 
 //bot goes online
 botClient.on('ready', () => {
-    //console.log("I am ready!");
+    console.log("I am ready!");
 })
 
 //events from the discord server
