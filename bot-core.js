@@ -163,7 +163,7 @@ botClient.on('guildBanAdd', async (guild, user) => {
 })
 
 botClient.on('guildMemberRemove', async (member) => {
-    //console.log(`guildMemberRemove: ${guild}, ${user}`);
+    //console.log(`guildMemberRemove: ${member}`);
     try {
         const logs = await botClient.channels.fetch(modLogChannel);
         const fetchedLogs = await member.guild.fetchAuditLogs({
@@ -171,6 +171,7 @@ botClient.on('guildMemberRemove', async (member) => {
             type: 'MEMBER_KICK',
         });
         const kickLog = await fetchedLogs.entries.first();
+        console.log(kickLog, member)
         
         if (!kickLog) return
         const { executor, target, reason } = kickLog;
