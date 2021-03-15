@@ -160,28 +160,6 @@ botClient.on('guildMemberRemove', async (member) => {
             var { executor, target, reason } = kickLog;
             if (!reason) reason = '<No reason given>';
             const embed = { // make embed
-                "title": ":hammer: Banned:",
-                "color": 11141120,
-                "thumbnail": {
-                    "url": member.user.displayAvatarURL()
-                },
-                "fields": [
-                    {
-                        "name": member.user.tag,
-                        "value": "(id: "+member.user.id+")"
-                    },
-                    {
-                        "name": "Has been ***BANNED*** from the server by "+executor.tag+" with reason:",
-                        "value": reason
-                    }
-                ]
-            };
-            logs.send({ embed })
-            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
-        } else if (banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
-            var { executor, target, reason } = banLog;
-            if (!reason) reason = '<No reason given>';
-            const embed = { // make embed
                 "title": ":boot: Kicked:",
                 "color": 11141120,
                 "thumbnail": {
@@ -194,6 +172,28 @@ botClient.on('guildMemberRemove', async (member) => {
                     },
                     {
                         "name": "Has been ***KICKED*** from the server by "+executor.tag+" with reason:",
+                        "value": reason
+                    }
+                ]
+            };
+            logs.send({ embed })
+            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+        } else if (banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
+            var { executor, target, reason } = banLog;
+            if (!reason) reason = '<No reason given>';
+            const embed = { // make embed
+                "title": ":hammer: Banned:",
+                "color": 11141120,
+                "thumbnail": {
+                    "url": member.user.displayAvatarURL()
+                },
+                "fields": [
+                    {
+                        "name": member.user.tag,
+                        "value": "(id: "+member.user.id+")"
+                    },
+                    {
+                        "name": "Has been ***BANNED*** from the server by "+executor.tag+" with reason:",
                         "value": reason
                     }
                 ]
