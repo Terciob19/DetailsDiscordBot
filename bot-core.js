@@ -41,10 +41,7 @@ function sendMessage(message, textToSend, user)
 
 //bot goes online
 botClient.on('ready', () => {
-    console.log("I am ready!");
-    const channel = botClient.channels.get(modLogChannel)
-    console.log(channel.name);
-    
+    //console.log("I am ready!");
 })
 
 //events from the discord server
@@ -134,11 +131,11 @@ botClient.on('message', function (message)
 
 })
 
-botClient.on('guildBanAdd', async (guild, user) => { 
+botClient.on('guildBanAdd', function (guild, user) { 
     console.log(`guildBanAdd: ${guild}, ${user}`);
-    const logs = guild.channels.get(modLogChannel);
+    const logs = botClient.channels.get(modLogChannel);
     console.log(`logs: ${logs}`);
-    const fetchedLogs = await guild.fetchAuditLogs({
+    const fetchedLogs = guild.fetchAuditLogs({
         limit: 1,
         type: 'MEMBER_BAN_ADD',
     });
