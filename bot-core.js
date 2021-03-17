@@ -162,11 +162,11 @@ botClient.on('guildMemberRemove', async (member) => {
     if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
         var { executor, target, reason } = kickLog;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
     } else if (banLog && banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
         var { executor, target, reason } = banLog;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
+        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
     }
 })
 
