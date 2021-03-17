@@ -142,46 +142,43 @@ botClient.on('message', function (message)
 
 botClient.on('guildMemberRemove', async (member) => {
     console.log(`guildMemberRemove: ${member}`);
-    try {
-        const logs = await botClient.channels.fetch(modLogChannel);
-        const fetchedKickLogs = await member.guild.fetchAuditLogs({
-            limit: 1,
-            type: 'MEMBER_KICK',
-        });
-        const fetchedBanLogs = await member.guild.fetchAuditLogs({
-            limit: 1,
-            type: 'MEMBER_BAN_ADD',
-        });
-        
-        const kickLog = await fetchedKickLogs.entries.first();
-        const banLog = await fetchedBanLogs.entries.first();
-        if (kickLog)
-        {
-            console.log(`kickLog entry found: ${kickLog.target.id} / ${member.user.id} - ${kickLog.createdAt} / $(member.joinedAt)`);
-        }
-        else if (banLog)
-        {
-            console.log(`banLog entry found: ${banLog.target.id} / ${member.user.id} - ${banLog.createdAt} / $(member.joinedAt)`);
-        }
-        else
-        {
-            console.log(`seems the user just left`);
-        }
-            
-        
-        if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
-            var { executor, target, reason } = kickLog;
-            if (!reason) reason = '<No reason given>';
-            logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
-        } else if (banLog && banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
-            var { executor, target, reason } = banLog;
-            if (!reason) reason = '<No reason given>';
-            logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
-        }
-    } catch (error) {
-        console.log(error);
+    
+    const logs = await botClient.channels.fetch(modLogChannel);
+    const fetchedKickLogs = await member.guild.fetchAuditLogs({
+        limit: 1,
+        type: 'MEMBER_KICK',
+    });
+    const fetchedBanLogs = await member.guild.fetchAuditLogs({
+        limit: 1,
+        type: 'MEMBER_BAN_ADD',
+    });
+    
+    const kickLog = await fetchedKickLogs.entries.first();
+    const banLog = await fetchedBanLogs.entries.first();
+    if (kickLog)
+    {
+        console.log(`kickLog entry found: ${kickLog.target.id} / ${member.user.id} - ${kickLog.createdAt} / $(member.joinedAt)`);
     }
-}).catch((err) => { console.log(err); });
+    else if (banLog)
+    {
+        console.log(`banLog entry found: ${banLog.target.id} / ${member.user.id} - ${banLog.createdAt} / $(member.joinedAt)`);
+    }
+    else
+    {
+        console.log(`seems the user just left`);
+    }
+        
+    
+    if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
+        var { executor, target, reason } = kickLog;
+        if (!reason) reason = '<No reason given>';
+        logs.send(`${member.user}/${member.user.tag} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+    } else if (banLog && banLog.target.id === member.user.id && banLog.createdAt > member.joinedAt) {
+        var { executor, target, reason } = banLog;
+        if (!reason) reason = '<No reason given>';
+        logs.send(`${member.user}/${member.user.tag} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
+    }
+})
 
 //token for the login process
 botClient.login(process.env.TOKENID);
