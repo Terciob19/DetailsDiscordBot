@@ -10,7 +10,7 @@ const { Client, Intents } = require ('discord.js');
 const myIntents = new Intents();
 myIntents.add('GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_BANS');
 //myIntents.add('GUILDS', 'GUILD_MESSAGES', 'GUILD_BANS');
-const botClient = new Client({ ws: { intents: myIntents } });
+const botClient = new Client({ ws: { intents: myIntents }, partials: ['GUILD_MEMBERS'] });
 
 
 //categories
@@ -141,8 +141,9 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildMemberRemove', async (member) => {
+    if (member.partial) await member.fetch();
     console.log(`guildMemberRemove: ${member}`);
-    
+
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
         limit: 1,
@@ -152,7 +153,7 @@ botClient.on('guildMemberRemove', async (member) => {
         limit: 1,
         type: 'MEMBER_BAN_ADD',
     });
-    
+
     const kickLog = await fetchedKickLogs.entries.first();
     const banLog = await fetchedBanLogs.entries.first();
     if (kickLog)
@@ -167,8 +168,7 @@ botClient.on('guildMemberRemove', async (member) => {
     {
         console.log(`seems the user just left`);
     }
-        
-    
+
     if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
         var { executor, target, reason } = kickLog;
         if (!reason) reason = '<No reason given>';
