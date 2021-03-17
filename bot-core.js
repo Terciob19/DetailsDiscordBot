@@ -181,7 +181,7 @@ botClient.on('guildMemberRemove', async (member) => {
     } catch (error) {
         console.log(error);
     }
-}).catch(err) => { console.log(err); }
+}).catch((err) => { console.log(err); });
 
 //token for the login process
 botClient.login(process.env.TOKENID);
