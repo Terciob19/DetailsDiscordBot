@@ -141,7 +141,7 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildMemberRemove', async (member) => {
-    //console.log(`guildMemberRemove: ${member}`);
+    console.log(`guildMemberRemove: ${member}`);
     try {
         const logs = await botClient.channels.fetch(modLogChannel);
         const fetchedKickLogs = await member.guild.fetchAuditLogs({
@@ -155,6 +155,13 @@ botClient.on('guildMemberRemove', async (member) => {
         
         const kickLog = await fetchedKickLogs.entries.first();
         const banLog = await fetchedBanLogs.entries.first();
+        if (kickLog)
+            console.log(`kickLog entry found`);
+        else if (banLog)
+            console.log(`banLog entry found`);
+        else
+            console.log(`seems the user just left`);
+            
         
         if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
             var { executor, target, reason } = kickLog;
