@@ -156,11 +156,17 @@ botClient.on('guildMemberRemove', async (member) => {
         const kickLog = await fetchedKickLogs.entries.first();
         const banLog = await fetchedBanLogs.entries.first();
         if (kickLog)
-            console.log(`kickLog entry found`);
+        {
+            console.log(`kickLog entry found: ${kickLog.target.id} / ${member.user.id} - ${kickLog.createdAt} / $(member.joinedAt)`);
+        }
         else if (banLog)
-            console.log(`banLog entry found`);
+        {
+            console.log(`banLog entry found: ${banLog.target.id} / ${member.user.id} - ${banLog.createdAt} / $(member.joinedAt)`);
+        }
         else
+        {
             console.log(`seems the user just left`);
+        }
             
         
         if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
