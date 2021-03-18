@@ -142,19 +142,17 @@ botClient.on('message', function (message)
 
 botClient.on('guildBanAdd', async (guild, user) => {
     //console.log(`guildBanAdd: ${guild}, ${user}`);
-    const member = guild.member(user.id);
     const logs = await botClient.channels.fetch(modLogChannel);
         const fetchedBanLogs = await guild.fetchAuditLogs({
         limit: 1,
         type: 'MEMBER_BAN_ADD',
     });
     const banLog = await fetchedBanLogs.entries.first();
-    if (banLog) console.log(`banLog entry found: ${banLog.target.id} / ${user.id} - ${banLog.createdAt} / ${member.joinedAt}`);
     
-    if (banLog && banLog.target.id === user.id && banLog.createdAt > member.joinedAt) {
+    if (banLog && banLog.target.id === user.id) {
         var { executor, target, reason } = banLog;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
+        logs.send(`${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
     } else {
         logs.send(`${user}/${user.tag}/${user.id} was banned, but no audit log could be found.`);
     }
