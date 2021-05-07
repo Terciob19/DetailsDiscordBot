@@ -55,8 +55,8 @@ const commandFAQ = {
   name: 'faq',
   description: 'Links the FAQ.',
   options: [{
-    name: '@use',
-    type: 'STRING',
+    name: 'user',
+    type: 'USER',
     description: 'The user which should be mentioned.',
     required: false,
   }],
@@ -80,20 +80,24 @@ botClient.on('interaction', interaction => {
   if (!interaction.isCommand()) return;
 
   // Check if it is the correct command
-  if (interaction.commandName === 'faq') {
-    // Get the input of the user
-    var input;
-    if (interaction.options && interaction.options[0]) input = interaction.options[0].value;
-    const user = getUserFromMention(input);
-    
-    // Reply to the command
-    if (user) {
-        interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
-    }
-    else
-    {
-        interaction.reply(`https://www.curseforge.com/wow/addons/details/pages/faq`);
-    }
+  switch(interaction.commandName)
+  {
+    case 'faq':
+        // Get the input of the user
+        var input;
+        if (interaction.options && interaction.options[0]) input = interaction.options[0].value;
+        //const user = getUserFromMention(input);
+        const user = input;
+        
+        // Reply to the command
+        if (user) {
+            interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
+        }
+        else
+        {
+            interaction.reply(`https://www.curseforge.com/wow/addons/details/pages/faq`);
+        }
+        
   }
 });
 
