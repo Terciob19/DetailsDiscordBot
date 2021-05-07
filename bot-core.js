@@ -126,7 +126,7 @@ botClient.once('ready', () => {
     //console.log("I am ready!");
 })
 
-botClient.on('interaction', async interaction => {
+botClient.on('interaction', async (interaction) => {
     // If the interaction isn't a slash command, return
     if (!interaction.isCommand()) return;
     
@@ -136,7 +136,7 @@ botClient.on('interaction', async interaction => {
     const parentID = channel.parentID;
     
     const response = getCommandResponse(parentID, command)
-    if (!response) = return;
+    if (!response) return;
     
     var user;
     if (interaction.options && interaction.options[0]){
