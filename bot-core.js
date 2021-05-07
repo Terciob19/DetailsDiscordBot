@@ -35,6 +35,72 @@ function sendMessage(message, textToSend, user)
     }
 }
 
+function getCommandResponse(parentID, command)
+{
+    switch (parentID)
+    {
+        case categoryOtherAddons:
+            switch (command)
+            {
+                case 'faq':
+                    return `https://www.curseforge.com/wow/addons/details/pages/faq`;
+            }
+            break;
+
+        case categoryPlaterNameplates:
+            switch (command)
+            {
+                case 'faq':
+                    return `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`
+                
+                case 'version':
+                    return `Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
+                    Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
+                    Both Details and Plater need to be in the correct version for your WoW installation.
+                    Newer Plater versions support the following chat command to get version information: \`/plater version\`
+                    Please provide this version info, if available.`;
+
+                case 'scale':
+                    return `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`;
+            }
+            break;
+
+        case categoryDetailsDamageMeter:
+            switch (command)
+            {
+                case 'faq':
+                    return 'FAQ! https://www.curseforge.com/wow/addons/details/pages/faq';
+
+                case 'aggro':
+                    'How to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg';
+
+                case 'classic':
+                    return 'here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow';
+                
+                case 'nickname':
+                    return `Update Details! and disable any weakaura modifiers for nicknames (like Nickname Extender).`;
+
+                case 'elvui':
+                    return `Go to ElvUI; AddonsSkins Options; disable chat embed or reduce it to one window, depending on your problem.`;
+                
+                case 'mythic':
+                    return `Go to options; Mythic Dungeon section; Enable: 'Make Overall Segment' AND 'Merge Trash' AND 'Delete Merged trash'; also increase the amount of segments under Display section.`;
+
+                case 'reinstall':
+                    return `Use the command '/details reinstall', or search for 'Details' in the WTF folder and delete all findings.`;
+
+                case 'scale':
+                    return `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`;
+
+                case 'short':
+                    return `To modify how numbers are shown, go into the options; Display section; Modify the value of 'Number Format'.`;
+
+            }
+            break;
+    }
+    return;
+}
+
 //commands
 const commandFAQ = {
   name: 'faq',
@@ -61,30 +127,26 @@ botClient.once('ready', () => {
 })
 
 botClient.on('interaction', interaction => {
-  // If the interaction isn't a slash command, return
-  if (!interaction.isCommand()) return;
-
-  // Check if it is the correct command
-  switch(interaction.commandName)
-  {
-    case 'faq':
-        // Get the input of the user
-        var user;
-        if (interaction.options && interaction.options[0]){
-            user = interaction.options[0].value;
-            user = botClient.guilds.cache.get(discordDetails).users.get(user);
-        }
-        
-        // Reply to the command
-        if (user) {
-            interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
-        }
-        else
-        {
-            interaction.reply(`https://www.curseforge.com/wow/addons/details/pages/faq`);
-        }
-        
-  }
+    // If the interaction isn't a slash command, return
+    if (!interaction.isCommand()) return;
+    
+    const command = interaction.commandName
+    const channel = await botClient.channels.fetch(interactions.channel_id);
+    if (!channel) return;
+    const parentID = channel.parentID;
+    
+    const response = getCommandResponse(parentID, command)
+    if (!response) = return;
+    
+    var user;
+    if (interaction.options && interaction.options[0]){
+        user = interaction.options[0].value;
+        user = botClient.guilds.cache.get(discordDetails).users.get(user);
+        response = response.concat(`${user}`);
+    }
+    
+    // Reply to the command
+    interaction.reply(`${response}`);
 });
 
 //events from the discord server
@@ -110,68 +172,9 @@ botClient.on('message', function (message)
     const user = message.mentions.users.first();
     const parentID = message.channel.parentID;
 
-    switch (parentID)
-    {
-        case categoryOtherAddons:
-            switch (command)
-            {
-                case 'faq':
-                    sendMessage(message, `https://www.curseforge.com/wow/addons/details/pages/faq`, user);
-            }
-            break;
-
-        case categoryPlaterNameplates:
-            switch (command)
-            {
-                case 'faq':
-                    return sendMessage(message, `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`, user);
-                
-                case 'version':
-                    return sendMessage(message, `Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
-                    Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
-                    Both Details and Plater need to be in the correct version for your WoW installation.
-                    Newer Plater versions support the following chat command to get version information: \`/plater version\`
-                    Please provide this version info, if available.`, user);
-
-                case 'scale':
-                    return sendMessage(message, `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`, user);                    
-            }
-            break;
-
-        case categoryDetailsDamageMeter:
-                switch (command)
-                {
-                    case 'faq':
-                        return sendMessage(message, 'FAQ! https://www.curseforge.com/wow/addons/details/pages/faq', user);
-
-                    case 'aggro':
-                        return sendMessage(message, 'How to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg', user);
-
-                    case 'classic':
-                        return sendMessage(message, 'here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow', user);
-                    
-                    case 'nickname':
-                        return sendMessage(message, `Update Details! and disable any weakaura modifiers for nicknames (like Nickname Extender).`, user);
-
-                    case 'elvui':
-                        return sendMessage(message, `Go to ElvUI; AddonsSkins Options; disable chat embed or reduce it to one window, depending on your problem.`, user);
-                    
-                    case 'mythic':
-                        return sendMessage(message, `Go to options; Mythic Dungeon section; Enable: 'Make Overall Segment' AND 'Merge Trash' AND 'Delete Merged trash'; also increase the amount of segments under Display section.`, user);
-
-                    case 'reinstall':
-                        return sendMessage(message, `Use the command '/details reinstall', or search for 'Details' in the WTF folder and delete all findings.`, user);
-
-                    case 'scale':
-                        return sendMessage(message, `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`, user);
-
-                    case 'short':
-                        return sendMessage(message, `To modify how numbers are shown, go into the options; Display section; Modify the value of 'Number Format'.`, user);
-
-
-                }
-                break;            
-    }
+    const response = getCommandResponse(parendID, command);
+    
+    if (response) sendMessage(message, response, user);
 
 })
 
