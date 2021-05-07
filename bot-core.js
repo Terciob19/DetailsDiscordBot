@@ -172,7 +172,7 @@ botClient.on('message', function (message)
     const user = message.mentions.users.first();
     const parentID = message.channel.parentID;
 
-    const response = getCommandResponse(parendID, command);
+    const response = getCommandResponse(parentID, command);
     
     if (response) sendMessage(message, response, user);
 
