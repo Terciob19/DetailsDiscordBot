@@ -132,11 +132,7 @@ botClient.on('interaction', async (interaction) => {
     
     const command = interaction.commandName;
     console.log(interaction);
-    console.log(`${interaction.data}`);
-    console.log(`${interaction.data.resolved}`);
-    console.log(`${interaction.data.resolved.users}`);
-    console.log(`${interaction.data.resolved.channels}`);
-    const channel = await botClient.guilds.cache.get(interaction.guild_id).channels.get(interaction.channel_id);
+    const channel = await botClient.guilds.cache.get(interaction.guildID).channels.get(interaction.channelID);
     if (!channel) return;
     const parentID = channel.parentID;
     
@@ -146,8 +142,8 @@ botClient.on('interaction', async (interaction) => {
     var user;
     if (interaction.options && interaction.options[0])
     {
-        user = interaction.options[0].value;
-        user = botClient.guilds.cache.get(discordDetails).users.get(user);
+        user = interaction.options[0].user;
+        //user = botClient.guilds.cache.get(discordDetails).users.get(user);
         response = response.concat(`${user}`);
     }
     
