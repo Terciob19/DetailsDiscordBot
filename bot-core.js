@@ -34,7 +34,7 @@ function getUserFromMention(mention)
             mention = mention.slice(1);
         }
 
-        return botClient.users.get(mention);
+        return botClient.guilds.cache.get(discordDetails).users.get(mention);
     }
 }
 
@@ -55,7 +55,7 @@ const commandFAQ = {
   name: 'faq',
   description: 'Links the FAQ.',
   options: [{
-    name: 'input',
+    name: '@use',
     type: 'STRING',
     description: 'The user which should be mentioned.',
     required: false,
@@ -82,7 +82,8 @@ botClient.on('interaction', interaction => {
   // Check if it is the correct command
   if (interaction.commandName === 'faq') {
     // Get the input of the user
-    const input = interaction.options[0].value;
+    var input;
+    if (interaction.options && interaction.options[0]) input = interaction.options[0].value;
     const user = getUserFromMention(input);
     
     // Reply to the command
@@ -116,7 +117,8 @@ botClient.on('message', function (message)
     const split = withoutPrefix.split(/ +/);
     const command = split[0];
     const targetUser = split[1];
-    const user = getUserFromMention(targetUser);
+    //const user = getUserFromMention(targetUser);
+    const user = message.mentions.users.first();
 
     switch (message.channel.parentID)
     {
