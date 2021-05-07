@@ -91,7 +91,7 @@ botClient.on('interaction', interaction => {
         
         // Reply to the command
         if (user) {
-            interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
+            interaction.reply(`${interaction.options[0]} ${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
         }
         else
         {
