@@ -131,24 +131,27 @@ botClient.on('interaction', async (interaction) => {
     if (!interaction.isCommand()) return;
     
     const command = interaction.commandName;
-    console.log(interaction);
+    //console.log(interaction);
     const channel = await botClient.channels.fetch(interaction.channelID);
     if (!channel) return;
     const parentID = channel.parentID;
     
     var response = getCommandResponse(parentID, command);
-    if (!response) return;
+    if (!response)
+    {
+        interaction.reply(`This command is not valid here, ${interaction.user}`).catch((err) => { console.log(err) });
+        return;
+    }
     
     var user;
-    if (interaction.options && interaction.options[0])
+    if (interaction.options && interaction.options[0] && interaction.options[0].user)
     {
         user = interaction.options[0].user;
-        //user = botClient.guilds.cache.get(discordDetails).users.get(user);
         response = `${user}: `.concat(response);
     }
     
     // Reply to the command
-    interaction.reply(`${response}`);
+    interaction.reply(`${response}`).catch((err) => { console.log(err) });
 });
 
 //events from the discord server
