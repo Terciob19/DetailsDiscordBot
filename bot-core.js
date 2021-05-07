@@ -131,7 +131,7 @@ botClient.on('interaction', async (interaction) => {
     if (!interaction.isCommand()) return;
     
     const command = interaction.commandName
-    const channel = await botClient.channels.fetch(interactions.channel_id);
+    const channel = await botClient.channels.fetch(interaction.channel_id);
     if (!channel) return;
     const parentID = channel.parentID;
     
