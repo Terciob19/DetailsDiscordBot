@@ -130,16 +130,20 @@ botClient.on('interaction', async (interaction) => {
     // If the interaction isn't a slash command, return
     if (!interaction.isCommand()) return;
     
-    const command = interaction.commandName
-    const channel = await botClient.channels.fetch(interaction.channel_id);
+    const command = interaction.commandName;
+    console.log(`${interaction}`);
+    console.log(`${interaction.channel_id}`);
+    console.log(`${interaction.guild_id}`);
+    const channel = await botClient.guilds.cache.get(interaction.guild_id).channels.get(interaction.channel_id);
     if (!channel) return;
     const parentID = channel.parentID;
     
-    const response = getCommandResponse(parentID, command)
+    const response = getCommandResponse(parentID, command);
     if (!response) return;
     
     var user;
-    if (interaction.options && interaction.options[0]){
+    if (interaction.options && interaction.options[0])
+    {
         user = interaction.options[0].value;
         user = botClient.guilds.cache.get(discordDetails).users.get(user);
         response = response.concat(`${user}`);
@@ -181,7 +185,7 @@ botClient.on('message', function (message)
 botClient.on('guildBanAdd', async (guild, user) => {
     //console.log(`guildBanAdd: ${guild}, ${user}`);
     const logs = await botClient.channels.fetch(modLogChannel);
-        const fetchedBanLogs = await guild.fetchAuditLogs({
+    const fetchedBanLogs = await guild.fetchAuditLogs({
         limit: 1,
         type: 'MEMBER_BAN_ADD',
     });
