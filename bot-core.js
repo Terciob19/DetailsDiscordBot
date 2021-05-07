@@ -132,7 +132,7 @@ botClient.on('interaction', async (interaction) => {
     
     const command = interaction.commandName;
     console.log(interaction);
-    const channel = await botClient.guilds.cache.get(interaction.guildID).channels.get(interaction.channelID);
+    const channel = await botClient.channels.fetch(interaction.channelID);
     if (!channel) return;
     const parentID = channel.parentID;
     
