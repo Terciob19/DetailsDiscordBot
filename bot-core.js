@@ -20,6 +20,9 @@ const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 
+//the discord
+const discordDetails = "503971787718131713";
+
 function getUserFromMention(mention) 
 {
     if (!mention) return;
@@ -47,11 +50,51 @@ function sendMessage(message, textToSend, user)
     }
 }
 
+//commands
+const commandFAQ = {
+  name: 'faq',
+  description: 'Links the FAQ.',
+  options: [{
+    name: 'input',
+    type: 'STRING',
+    description: 'The user which should be mentioned.',
+    required: false,
+  }],
+};
+
 
 //bot goes online
-botClient.on('ready', () => {
+botClient.once('ready', () => {
+    
+    //https://github.com/discordjs/discord.js/blob/master/docs/examples/commands.md
+    // Creating a global command
+    //botClient.application.commands.create(commandData);
+    // Creating a guild-specific command
+    botClient.guilds.cache.get(discordDetails).commands.create(commandFAQ);
+    
     //console.log("I am ready!");
 })
+
+botClient.on('interaction', interaction => {
+  // If the interaction isn't a slash command, return
+  if (!interaction.isCommand()) return;
+
+  // Check if it is the correct command
+  if (interaction.commandName === 'faq') {
+    // Get the input of the user
+    const input = interaction.options[0].value;
+    const user = getUserFromMention(input);
+    
+    // Reply to the command
+    if (user) {
+        interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
+    }
+    else
+    {
+        interaction.reply(`https://www.curseforge.com/wow/addons/details/pages/faq`);
+    }
+  }
+});
 
 //events from the discord server
 botClient.on('message', function (message) 
