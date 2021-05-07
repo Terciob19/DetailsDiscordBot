@@ -144,7 +144,7 @@ botClient.on('interaction', async (interaction) => {
     {
         user = interaction.options[0].user;
         //user = botClient.guilds.cache.get(discordDetails).users.get(user);
-        response = response.concat(`${user}`);
+        response = `${user}: `.concat(response);
     }
     
     // Reply to the command
