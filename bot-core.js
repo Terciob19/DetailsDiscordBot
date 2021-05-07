@@ -10,7 +10,7 @@ const { Client, Intents } = require ('discord.js');
 const myIntents = new Intents();
 myIntents.add('GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_BANS');
 //myIntents.add('GUILDS', 'GUILD_MESSAGES', 'GUILD_BANS');
-const botClient = new Client({ ws: { intents: myIntents }, partials: ['GUILD_MEMBERS'] });
+const botClient = new Client({ intents: myIntents, partials: ['GUILD_MEMBERS'] });
 
 
 //categories
