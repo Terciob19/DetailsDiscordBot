@@ -126,7 +126,7 @@ botClient.once('ready', () => {
     //console.log("I am ready!");
 })
 
-botClient.on('interaction', interaction => {
+botClient.on('interaction', async interaction => {
     // If the interaction isn't a slash command, return
     if (!interaction.isCommand()) return;
     
@@ -198,7 +198,7 @@ botClient.on('guildBanAdd', async (guild, user) => {
 
 botClient.on('guildMemberRemove', async (member) => {
     if (member.partial) await member.fetch();
-    console.log(`guildMemberRemove: ${member}`);
+    //console.log(`guildMemberRemove: ${member}`);
 
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
@@ -207,7 +207,7 @@ botClient.on('guildMemberRemove', async (member) => {
     });
 
     const kickLog = await fetchedKickLogs.entries.first();
-    if (kickLog) console.log(`kickLog entry found: ${kickLog.target.id} / ${member.user.id} - ${kickLog.createdAt} / ${member.joinedAt}`);
+    //if (kickLog) console.log(`kickLog entry found: ${kickLog.target.id} / ${member.user.id} - ${kickLog.createdAt} / ${member.joinedAt}`);
 
     if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
         var { executor, target, reason } = kickLog;
