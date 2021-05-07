@@ -61,7 +61,7 @@ function getCommandResponse(parentID, command)
                     Please provide this version info, if available.`;
 
                 case 'scale':
-                    return `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`;
+                    return `Look at the top left corner of the options menu, there's a scale slider. Right click it, type the value you want, e.g. 1.0, and press enter.`;
             }
             break;
 
@@ -136,7 +136,7 @@ botClient.on('interaction', async (interaction) => {
     if (!channel) return;
     const parentID = channel.parentID;
     
-    const response = getCommandResponse(parentID, command);
+    var response = getCommandResponse(parentID, command);
     if (!response) return;
     
     var user;
