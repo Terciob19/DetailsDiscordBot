@@ -23,21 +23,6 @@ const modLogChannel = "821051497525542923";
 //the discord
 const discordDetails = "503971787718131713";
 
-function getUserFromMention(mention) 
-{
-    if (!mention) return;
-
-    if (mention.startsWith('<@') && mention.endsWith('>')) {
-        mention = mention.slice(2, -1);
-
-        if (mention.startsWith('!')) {
-            mention = mention.slice(1);
-        }
-
-        return botClient.guilds.cache.get(discordDetails).users.get(mention);
-    }
-}
-
 function sendMessage(message, textToSend, user)
 {
     if (user)
@@ -84,14 +69,15 @@ botClient.on('interaction', interaction => {
   {
     case 'faq':
         // Get the input of the user
-        var input;
-        if (interaction.options && interaction.options[0]) input = interaction.options[0].value;
-        //const user = getUserFromMention(input);
-        const user = input;
+        var user;
+        if (interaction.options && interaction.options[0]){
+            user = interaction.options[0].value;
+            user = botClient.guilds.cache.get(discordDetails).users.get(user);
+        }
         
         // Reply to the command
         if (user) {
-            interaction.reply(`${interaction.options[0]} ${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
+            interaction.reply(`${user}: https://www.curseforge.com/wow/addons/details/pages/faq`);
         }
         else
         {
@@ -121,10 +107,10 @@ botClient.on('message', function (message)
     const split = withoutPrefix.split(/ +/);
     const command = split[0];
     const targetUser = split[1];
-    //const user = getUserFromMention(targetUser);
     const user = message.mentions.users.first();
+    const parentID = message.channel.parentID;
 
-    switch (message.channel.parentID)
+    switch (parentID)
     {
         case categoryOtherAddons:
             switch (command)
