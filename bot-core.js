@@ -62,6 +62,9 @@ function getCommandResponse(parentID, command)
 
                 case 'scale':
                     return `Look at the top left corner of the options menu, there's a scale slider. Right click it, type the value you want, e.g. 1.0, and press enter.`;
+
+                case 'error':
+                    return `First use **/plater** to grab the version of Plater, after thar active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;                    
             }
             break;
 
@@ -95,6 +98,12 @@ function getCommandResponse(parentID, command)
                 case 'short':
                     return `To modify how numbers are shown, go into the options; Display section; Modify the value of 'Number Format'.`;
 
+                case 'error':
+                    return `First use **/de** to grab the version of Details!, after thar active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
+
+                case 'reset':
+                    return `Use **/de reinstall** to reinstall Details!, if you problem persists, open the wow installation folder and search for Details, erase all results and download the latest version.`;
+                    
             }
             break;
     }
