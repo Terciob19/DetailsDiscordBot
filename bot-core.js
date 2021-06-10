@@ -104,6 +104,9 @@ function getCommandResponse(parentID, command)
                 case 'reset':
                     return `Use **/de reinstall** to reinstall Details!, if you problem persists, open the wow installation folder and search for Details, erase all results and download the latest version.`;
 
+                case 'skin':
+                    return `To copy a window select Skins in the options panel; Select the window to be copied in the bottom right corner; Give a name in the Save field, e.g. 'My New Skin', and press enter; Select the window to receive the new skin in the bottom right dropdown; Select a skin from the Select a Skin dropdown.`;
+
             }
             break;
     }
