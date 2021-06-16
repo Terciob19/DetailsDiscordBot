@@ -23,6 +23,13 @@ const modLogChannel = "821051497525542923";
 //the discord
 const discordDetails = "503971787718131713";
 
+//some sleeping
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 function sendMessage(message, textToSend, user)
 {
     if (user)
@@ -196,12 +203,18 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guild, user) => {
-    //console.log(`guildBanAdd: ${guild}, ${user}`);
+    if (guild.partial) await guild.fetch();
+    console.log(`guildBanAdd: ${guild}, ${user}`);
+    
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedBanLogs = await guild.fetchAuditLogs({
         limit: 1,
         type: 'MEMBER_BAN_ADD',
     });
+    
+    //wait a bit for audit logs
+    await sleep(1000);
+    
     const banLog = await fetchedBanLogs.entries.first();
     
     if (banLog && banLog.target.id === user.id) {
@@ -217,6 +230,9 @@ botClient.on('guildMemberRemove', async (member) => {
     if (member.partial) await member.fetch();
     //console.log(`guildMemberRemove: ${member}`);
 
+    //wait a bit for audit logs
+    await sleep(1000);
+    
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
         limit: 1,
@@ -230,6 +246,8 @@ botClient.on('guildMemberRemove', async (member) => {
         var { executor, target, reason } = kickLog;
         if (!reason) reason = '<No reason given>';
         logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+    } else {
+        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked, but no audit log could be found.`);
     }
 })
 
