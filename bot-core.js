@@ -203,6 +203,7 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guildBan) => {
+    if (guildBan.partial) await guildBan.fetch();
     console.log(`guildBanAdd:`);
     console.log(guildBan);
     
