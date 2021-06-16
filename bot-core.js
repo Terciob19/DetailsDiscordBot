@@ -212,6 +212,10 @@ botClient.on('guildBanAdd', async (guildBan) => {
     //wait a bit for audit logs
     await sleep(5000);
     
+    const fetchedBanLogs = await guild.fetchAuditLogs({
+        limit: 1,
+        type: 'MEMBER_BAN_ADD',
+    });
     const banLog = await fetchedBanLogs.entries.first();
     
     if (banLog && banLog.target.id === user.id) {
