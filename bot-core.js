@@ -208,6 +208,7 @@ botClient.on('guildBanAdd', async (guildBan) => {
     
     const logs = await botClient.channels.fetch(modLogChannel);
     const user = guildBan.user;
+    const guild = guildBan.guild;
     
     //wait a bit for audit logs
     await sleep(5000);
@@ -226,29 +227,6 @@ botClient.on('guildBanAdd', async (guildBan) => {
         var reason = guildBan.reason;
         if (!reason) reason = '<No reason given>';
         logs.send(`${user}/${user.tag}/${user.id} was banned with reason: '${reason}'`);
-    }
-})
-
-botClient.on('guildBanAdd_OLD', async (guild, user) => {
-    console.log(`guildBanAdd: ${guild}, ${user}`);
-    
-    const logs = await botClient.channels.fetch(modLogChannel);
-    const fetchedBanLogs = await guild.fetchAuditLogs({
-        limit: 1,
-        type: 'MEMBER_BAN_ADD',
-    });
-    
-    //wait a bit for audit logs
-    await sleep(5000);
-    
-    const banLog = await fetchedBanLogs.entries.first();
-    
-    if (banLog && banLog.target.id === user.id) {
-        var { executor, target, reason } = banLog;
-        if (!reason) reason = '<No reason given>';
-        logs.send(`${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
-    } else {
-        logs.send(`${user}/${user.tag}/${user.id} was banned, but no audit log could be found.`);
     }
 })
 
