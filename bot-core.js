@@ -203,7 +203,7 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guild, user) => {
-    if (guild.partial) await guild.fetch();
+    //if (guild.partial) await guild.fetch(); //this appears to break stuff... 'DiscordAPIError: Missing Permissions'
     console.log(`guildBanAdd: ${guild}, ${user}`);
     
     const logs = await botClient.channels.fetch(modLogChannel);
@@ -213,7 +213,9 @@ botClient.on('guildBanAdd', async (guild, user) => {
     });
     
     //wait a bit for audit logs
-    await sleep(1000);
+    console.log('sleep')
+    await sleep(5000);
+    console.log('end-sleep')
     
     const banLog = await fetchedBanLogs.entries.first();
     
@@ -231,7 +233,9 @@ botClient.on('guildMemberRemove', async (member) => {
     //console.log(`guildMemberRemove: ${member}`);
 
     //wait a bit for audit logs
-    await sleep(1000);
+    console.log('sleep')
+    await sleep(5000);
+    console.log('end-sleep')
     
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
