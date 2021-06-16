@@ -203,7 +203,7 @@ botClient.on('message', function (message)
 })
 
 botClient.on('guildBanAdd', async (guildBan) => {
-    if (guildBan.partial) await guildBan.fetch();
+    //if (guildBan.partial) await guildBan.fetch(); //this is causing 'DiscordAPIError: Missing Permissions'
     console.log(`guildBanAdd:`);
     console.log(guildBan);
     
