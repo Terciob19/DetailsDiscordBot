@@ -251,8 +251,6 @@ botClient.on('guildMemberRemove', async (member) => {
         var { executor, target, reason } = kickLog;
         if (!reason) reason = '<No reason given>';
         logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
-    } else {
-        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked, but no audit log could be found.`);
     }
 })
 
