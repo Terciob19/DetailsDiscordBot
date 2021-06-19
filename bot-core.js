@@ -23,6 +23,13 @@ const modLogChannel = "821051497525542923";
 //the discord
 const discordDetails = "503971787718131713";
 
+//some sleeping
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 function sendMessage(message, textToSend, user)
 {
     if (user)
@@ -198,9 +205,18 @@ botClient.on('message', function (message)
 
 })
 
-botClient.on('guildBanAdd', async (guild, user) => {
-    //console.log(`guildBanAdd: ${guild}, ${user}`);
+botClient.on('guildBanAdd', async (guildBan) => {
+    //if (guildBan.partial) await guildBan.fetch(); //this is causing 'DiscordAPIError: Missing Permissions'
+    console.log(`guildBanAdd:`);
+    console.log(guildBan);
+    
     const logs = await botClient.channels.fetch(modLogChannel);
+    const user = guildBan.user;
+    const guild = guildBan.guild;
+    
+    //wait a bit for audit logs
+    await sleep(5000);
+    
     const fetchedBanLogs = await guild.fetchAuditLogs({
         limit: 1,
         type: 'MEMBER_BAN_ADD',
@@ -212,7 +228,9 @@ botClient.on('guildBanAdd', async (guild, user) => {
         if (!reason) reason = '<No reason given>';
         logs.send(`${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
     } else {
-        logs.send(`${user}/${user.tag}/${user.id} was banned, but no audit log could be found.`);
+        var reason = guildBan.reason;
+        if (!reason) reason = '<No reason given>';
+        logs.send(`${user}/${user.tag}/${user.id} was banned with reason: '${reason}'`);
     }
 })
 
@@ -220,6 +238,9 @@ botClient.on('guildMemberRemove', async (member) => {
     if (member.partial) await member.fetch();
     //console.log(`guildMemberRemove: ${member}`);
 
+    //wait a bit for audit logs
+    await sleep(5000);
+    
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
         limit: 1,
