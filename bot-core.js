@@ -106,6 +106,9 @@ function getCommandResponse(parentID, command)
 
                 case 'skin':
                     return `To copy a window select Skins in the options panel; Select the window to be copied in the bottom right corner; Give a name in the Save field, e.g. 'My New Skin', and press enter; Select the window to receive the new skin in the bottom right dropdown; Select a skin from the Select a Skin dropdown.`;
+                
+                case 'combatlog':
+                    return `Raw combatlogs is required to study the case, please get on a group, type **/combatlog**, play normally, close your game and get the file from \World of Warcraft\_classic_\Logs\WoWCombatLog-date.txt`;
 
             }
             break;
