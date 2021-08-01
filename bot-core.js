@@ -145,7 +145,7 @@ botClient.once('ready', () => {
     // Creating a guild-specific command
     botClient.guilds.cache.get(discordDetails).commands.create(commandFAQ);
     
-    //console.log("I am ready!");
+    console.log("I am ready!");
 })
 
 botClient.on('interaction', async (interaction) => {
@@ -179,7 +179,6 @@ botClient.on('interaction', async (interaction) => {
 //events from the discord server
 botClient.on('message', function (message) 
 {
-    console.log(`message: ${message}, ${message.author}, ${message.author.bot}`);
     //the message isn't from the bot
     if (message.author.bot)
     { 
