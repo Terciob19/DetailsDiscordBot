@@ -7,6 +7,6 @@
     "start": "node bot-core.js"
   },
   "dependencies": {
-    "discord.js": "discordjs/discord.js.git#fe5d56c"
+    "discord.js": "discordjs/discord.js.git#3578159"
   }
 }
