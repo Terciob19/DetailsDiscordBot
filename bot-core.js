@@ -145,7 +145,7 @@ botClient.once('ready', () => {
     console.log("I am ready!");
 })
 
-botClient.on('interaction', async (interaction) => {
+botClient.on('interactionCreate', async (interaction) => {
     // If the interaction isn't a slash command, return
     if (!interaction.isCommand()) return;
     
