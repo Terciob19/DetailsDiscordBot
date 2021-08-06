@@ -7,6 +7,6 @@
     "start": "node bot-core.js"
   },
   "dependencies": {
-    "discord.js": "discordjs/discord.js.git#3578159"
+    "discord.js": "^13.0.0"
   }
 }

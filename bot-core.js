@@ -5,12 +5,9 @@
 //const botClient = new Discord.Client();
 
 //grab the discord 'library'
-const { Client, Intents } = require ('discord.js');
+const { Client, Intents, MessageAttachment, MessageEmbed, WebhookClient } = require ('discord.js');
 //make the bot client object and register intents (events)
-const myIntents = new Intents();
-myIntents.add('GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_BANS');
-//myIntents.add('GUILDS', 'GUILD_MESSAGES', 'GUILD_BANS');
-const botClient = new Client({ intents: myIntents, partials: ['GUILD_MEMBERS'] });
+const botClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_BANS], partials: ['GUILD_MEMBERS'] });
 
 
 //categories
@@ -34,17 +31,17 @@ function sendMessage(message, textToSend, user)
 {
     if (user)
     {
-        return message.channel.send(`${user} ${textToSend}`).catch((err) => { console.log(err) });
+        return message.channel.send({ content: `${user} ${textToSend}` }).catch((err) => { console.log(err) });
     }
     else
     {
-        return message.channel.send(`${textToSend}`).catch((err) => { console.log(err) });;
+        return message.channel.send({ content: `${textToSend}` }).catch((err) => { console.log(err) });;
     }
 }
 
-function getCommandResponse(parentID, command)
+function getCommandResponse(parentId, command)
 {
-    switch (parentID)
+    switch (parentId)
     {
         case categoryOtherAddons:
             switch (command)
@@ -154,14 +151,14 @@ botClient.on('interaction', async (interaction) => {
     
     const command = interaction.commandName;
     //console.log(interaction);
-    const channel = await botClient.channels.fetch(interaction.channelID);
+    const channel = await botClient.channels.fetch(interaction.channelId);
     if (!channel) return;
-    const parentID = channel.parentID;
+    const parentId = channel.parentId;
     
-    var response = getCommandResponse(parentID, command);
+    var response = getCommandResponse(parentId, command);
     if (!response)
     {
-        interaction.reply(`This command is not valid here, ${interaction.user}`).catch((err) => { console.log(err) });
+        interaction.reply({ content: `This command is not valid here, ${interaction.user}` }).catch((err) => { console.log(err) });
         return;
     }
     
@@ -173,11 +170,11 @@ botClient.on('interaction', async (interaction) => {
     }
     
     // Reply to the command
-    interaction.reply(`${response}`).catch((err) => { console.log(err) });
+    interaction.reply({ content: `${response}` }).catch((err) => { console.log(err) });
 });
 
 //events from the discord server
-botClient.on('message', function (message) 
+botClient.on('messageCreate', function (message) 
 {
     //the message isn't from the bot
     if (message.author.bot)
@@ -197,9 +194,9 @@ botClient.on('message', function (message)
     const command = split[0];
     const targetUser = split[1];
     const user = message.mentions.users.first();
-    const parentID = message.channel.parentID;
+    const parentId = message.channel.parentId;
 
-    const response = getCommandResponse(parentID, command);
+    const response = getCommandResponse(parentId, command);
     
     if (response) sendMessage(message, response, user);
 
@@ -226,11 +223,11 @@ botClient.on('guildBanAdd', async (guildBan) => {
     if (banLog && banLog.target.id === user.id) {
         var { executor, target, reason } = banLog;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'`);
+        logs.send({ content: `${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'` });
     } else {
         var reason = guildBan.reason;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${user}/${user.tag}/${user.id} was banned with reason: '${reason}'`);
+        logs.send({ content: `${user}/${user.tag}/${user.id} was banned with reason: '${reason}'` });
     }
 })
 
@@ -253,7 +250,7 @@ botClient.on('guildMemberRemove', async (member) => {
     if (kickLog && kickLog.target.id === member.user.id && kickLog.createdAt > member.joinedAt) {
         var { executor, target, reason } = kickLog;
         if (!reason) reason = '<No reason given>';
-        logs.send(`${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'`);
+        logs.send({ content: `${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'` });
     }
 })
 
