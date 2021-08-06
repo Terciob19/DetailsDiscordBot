@@ -2,11 +2,14 @@
   "name": "DetailsBot",
   "description": "Bot for Discord Servers",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  }
   "main": "bot-core.js",
   "scripts": {
     "start": "node bot-core.js"
   },
   "dependencies": {
-    "discord.js": "^13.0.0"
+    "discord.js": "discordjs/discord.js.git#cfde127"
   }
 }
