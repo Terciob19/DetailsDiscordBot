@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "engines": {
     "node": "16.x"
-  }
+  },
   "main": "bot-core.js",
   "scripts": {
     "start": "node bot-core.js"
   },
   "dependencies": {
-    "discord.js": "discordjs/discord.js.git#cfde127"
+    "discord.js": "^13.0.0"
   }
 }
