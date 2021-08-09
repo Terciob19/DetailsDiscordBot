@@ -165,7 +165,7 @@ botClient.on('interactionCreate', async (interaction) => {
     var user;
     if (interaction.options && interaction.options.get('user'))
     {
-        console.log(${interaction.options.get('user')});
+        console.log(interaction.options.get('user'));
         user = interaction.options.get('user');
         response = `${user}: `.concat(response);
     }
