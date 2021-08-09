@@ -150,7 +150,7 @@ botClient.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) return;
     
     const command = interaction.commandName;
-    console.log(interaction);
+    //console.log(interaction);
     const channel = await botClient.channels.fetch(interaction.channelId);
     if (!channel) return;
     const parentId = channel.parentId;
@@ -165,7 +165,7 @@ botClient.on('interactionCreate', async (interaction) => {
     var user;
     if (interaction.options && interaction.options.get('user'))
     {
-        console.log(`${interaction.options.get('user')}`);
+        console.log(${interaction.options.get('user')});
         user = interaction.options.get('user');
         response = `${user}: `.concat(response);
     }
