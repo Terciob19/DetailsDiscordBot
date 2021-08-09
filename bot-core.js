@@ -170,7 +170,7 @@ botClient.on('interactionCreate', async (interaction) => {
     }
     
     // Reply to the command
-    interaction.reply({ content: `${response}` }).catch((err) => { console.log(err) });
+    interaction.followUp({ content: `${response}` }).catch((err) => { console.log(err) });
 });
 
 //events from the discord server
