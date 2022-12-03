@@ -106,7 +106,7 @@ function getCommandResponse(parentId, command)
                     return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
 
                 case 'error':
-                    return `First use **/de** to grab the version of Details!, after that active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
+                    return `Active to show errors with the command: **/console scriptErrors 1** and **/reload**. When a error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
 
                 case 'reset':
                     return `Use **/de reinstall** to reinstall Details!, if you problem persists, open the wow installation folder and search for Details, erase all results and download the latest version.`;
