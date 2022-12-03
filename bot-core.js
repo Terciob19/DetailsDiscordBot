@@ -69,6 +69,9 @@ function getCommandResponse(parentId, command)
 
                 case 'error':
                     return `First use **/plater** to grab the version of Plater, after that active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;                    
+
+                case 'alpha':
+                    return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
             }
             break;
 
@@ -99,8 +102,8 @@ function getCommandResponse(parentId, command)
                 case 'scale':
                     return `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`;
 
-                case 'short':
-                    return `To modify how numbers are shown, go into the options; Display section; Modify the value of 'Number Format'.`;
+                case 'alpha':
+                    return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
 
                 case 'error':
                     return `First use **/de** to grab the version of Details!, after that active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
@@ -113,6 +116,9 @@ function getCommandResponse(parentId, command)
                 
                 case 'combatlog':
                     return `Raw combatlogs is required to study the case, please get on a group, type **/combatlog**, play normally, close your game and get the file from \World of Warcraft\_classic_\Logs\WoWCombatLog-date.txt`;
+
+                case 'version':
+                    return `Please use this command ingame: **/details version**, it'll open a box in the middle of the screen to copy the version text, the version is also printed to chat.`;
 
             }
             break;
