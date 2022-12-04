@@ -97,7 +97,7 @@ function getCommandResponse(parentId, command)
                     return `Go to options; Mythic Dungeon section; Enable: 'Make Overall Segment' AND 'Merge Trash' AND 'Delete Merged trash'; also increase the amount of segments under Display section.`;
 
                 case 'reinstall':
-                    return `Use the command '/details reinstall', or search for 'Details' in the WTF folder and delete all findings.`;
+                    return `Use the command '/details reinstall', to do a hard reset: close the game, windows search 'Details' in the WoWFolder/retail/WTF/ and delete all findings.`;
 
                 case 'scale':
                     return `Look at the top left corner, there's a scale slider there, right click it and type 1.0 and press enter.`;
