@@ -120,6 +120,9 @@ function getCommandResponse(parentId, command)
                 case 'version':
                     return `Please use this command ingame: **/details version**, it'll open a box in the middle of the screen to copy the version text, the version is also printed to chat.`;
 
+                case 'fade':
+                    return `If the window is fading while in combat, check: Options > Automation > disable enabled options there. check: Options > Auto Run Code > On Enter Combat (dropdown) > Delete code there and hit save.`;
+
             }
             break;
     }
