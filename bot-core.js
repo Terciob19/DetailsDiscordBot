@@ -17,6 +17,8 @@ const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 
+const streamerRoleName = 'Patreon Legend';
+
 //the discord
 const discordDetails = "503971787718131713";
 
@@ -262,6 +264,38 @@ botClient.on('guildMemberRemove', async (member) => {
         logs.send({ content: `${member.user}/${member.user.tag}/${member.user.id} was kicked by ${executor}/${executor.tag} with reason: '${reason}'` });
     }
 })
+
+botClient.on('presenceUpdate', async (oldPresence, newPresence) => 
+{
+    if (!newPresence.activities)
+    { 
+        return;
+    }
+
+    //get the role of the user
+    const streamerRole = newPresence.guild.roles.cache.find(role => role.name === streamerRoleName);
+    if (!streamerRole)
+    {
+        return;
+    }
+  
+    const twitchStream = newPresence.activities.find(activity => activity.type === 'STREAMING' && activity.name.toLowerCase().includes('twitch.tv'));
+  
+    if (twitchStream) 
+    {
+        //const twitchUsername = twitchStream.url.split('/').pop();
+        //detect which channel the user is in
+        //const channel = await botClient.channels.fetch(newPresence.member.voice.channelId);
+
+        const logs = await botClient.channels.fetch(modLogChannel);
+        //testing
+        logs.send({ content: `${newPresence.member.user}/${newPresence.member.user.tag}/${newPresence.member.user.id} is streaming on twitch: ${twitchStream.url}` });
+
+        //const channel = botClient.channels.cache.get('channel_id_to_move_user_to');
+        //const member = newPresence.member;
+        //member.voice.setChannel(channel);
+    }
+});
 
 //token for the login process
 botClient.login(process.env.TOKENID);
