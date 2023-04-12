@@ -83,6 +83,9 @@ function getCommandResponse(parentId, command)
                 case 'faq':
                     return 'FAQ! https://www.curseforge.com/wow/addons/details/pages/faq';
 
+                case 'report':
+                    return 'could you post the **/details version**, **Game Version**, **Where/When the bug happens**';
+
                 case 'aggro':
                     'How to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg';
 
