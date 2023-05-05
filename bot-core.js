@@ -204,8 +204,7 @@ botClient.on('interactionCreate', async (interaction) => {
 });
 
 //events from the discord server
-botClient.on('messageCreate', function (message) 
-{
+botClient.on('messageCreate', (message) => {
     console.log(message);
     //the message isn't from the bot
     if (message.author.bot)
