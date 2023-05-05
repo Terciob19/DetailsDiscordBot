@@ -277,7 +277,7 @@ botClient.on('guildMemberRemove', async (member) => {
     const logs = await botClient.channels.fetch(modLogChannel);
     const fetchedKickLogs = await member.guild.fetchAuditLogs({
         limit: 1,
-        type: 'MEMBER_KICK',
+        type: 20,
     });
 
     const kickLog = await fetchedKickLogs.entries.first();
