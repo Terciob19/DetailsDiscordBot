@@ -178,11 +178,11 @@ botClient.on('interactionCreate', async (interaction) => {
     const channel = await botClient.channels.fetch(interaction.channelId);
     if (!channel) return;
     var parentId;
-    if (message.channel.type == ChannelType.PublicThread)
+    if (channel.type == ChannelType.PublicThread)
     {
-        parentId = message.channel.parent.parentId;
+        parentId = channel.parent.parentId;
     } else {
-        parentId = message.channel.parentId;
+        parentId = channel.parentId;
     }
     
     var response = getCommandResponse(parentId, command);
