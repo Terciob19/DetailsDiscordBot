@@ -150,7 +150,7 @@ const commandFAQ = {
   description: 'Links the FAQ.',
   options: [{
     name: 'user',
-    type: 'USER',
+    type: 6,
     description: 'The user which should be mentioned.',
     required: false,
   }],
