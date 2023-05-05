@@ -5,9 +5,9 @@
 //const botClient = new Discord.Client();
 
 //grab the discord 'library'
-const { Client, GatewayIntentBits, MessageAttachment, MessageEmbed, WebhookClient, ChannelType } = require ('discord.js');
+const { Client, GatewayIntentBits, MessageAttachment, MessageEmbed, WebhookClient, ChannelType, Partials } = require ('discord.js');
 //make the bot client object and register intents (events)
-const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildBans], partials: ['GUILD_MEMBERS'] });
+const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildBans], partials: [Partials.GuildMember] });
 
 
 //categories
