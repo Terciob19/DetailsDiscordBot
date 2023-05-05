@@ -178,7 +178,7 @@ botClient.on('interactionCreate', async (interaction) => {
     const channel = await botClient.channels.fetch(interaction.channelId);
     if (!channel) return;
     var parentId;
-    if (channel.type == ChannelType.PublicThread)
+    if (channel.type == 11)
     {
         parentId = channel.parent.parentId;
     } else {
@@ -225,7 +225,7 @@ botClient.on('messageCreate', function (message)
     const targetUser = split[1];
     const user = message.mentions.users.first();
     var parentId;
-    if (message.channel.type == ChannelType.PublicThread)
+    if (message.channel.type == 11)
     {
         parentId = message.channel.parent.parentId;
     } else {
