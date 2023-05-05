@@ -45,6 +45,16 @@ function getCommandResponse(parentId, command)
 {
     switch (parentId)
     {
+        case categoryMods:
+            switch (command)
+            {
+                case 'commands':
+                return `General: faq
+                Plater: version, scale, error, alpha
+                Details: report, aggro, classic, nickname, elvui, mythic, reinstall, scale, alpha, error, reset, skin, combatlog, version, fade`;
+            }
+            break;
+            
         case categoryOtherAddons:
             switch (command)
             {
