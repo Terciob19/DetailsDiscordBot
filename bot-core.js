@@ -224,14 +224,12 @@ botClient.on('messageCreate', async (message) => {
     const targetUser = split[1];
     const user = message.mentions.users.first();
     var parentId;
-    console.log(message.channel.type);
     if (message.channel.type == ChannelType.PublicThread)
     {
         parentId = message.channel.parent.parentId;
     } else {
         parentId = message.channel.parentId;
     }
-    console.log(parentId);
 
     const response = getCommandResponse(parentId, command);
     
