@@ -5,7 +5,7 @@
 //const botClient = new Discord.Client();
 
 //grab the discord 'library'
-const { Client, GatewayIntentBits, MessageAttachment, MessageEmbed, WebhookClient, ChannelType, Partials } = require ('discord.js');
+const { Client, GatewayIntentBits, MessageAttachment, MessageEmbed, WebhookClient, ChannelType, Partials, AuditLogEvent, Events } = require ('discord.js');
 //make the bot client object and register intents (events)
 const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildBans], partials: [Partials.GuildMember] });
 
@@ -178,14 +178,12 @@ botClient.on('interactionCreate', async (interaction) => {
     const channel = await botClient.channels.fetch(interaction.channelId);
     if (!channel) return;
     var parentId;
-    console.log(channel.type);
     if (channel.type == ChannelType.PublicThread)
     {
         parentId = channel.parent.parentId;
     } else {
         parentId = channel.parentId;
     }
-    console.log(parentId);
     
     var response = getCommandResponse(parentId, command);
     if (!response)
