@@ -267,7 +267,7 @@ botClient.on('guildBanAdd', async (guildBan) => {
 })
 
 botClient.on('guildMemberRemove', async (member) => {
-    console.log(member);
+    //console.log(member);
     //if (member.partial) await member.fetch();
     //console.log(`guildMemberRemove: ${member}`);
 
