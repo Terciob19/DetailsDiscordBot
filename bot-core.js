@@ -96,14 +96,17 @@ function getCommandResponse(parentId, command)
                 case 'report':
                     return 'could you post the **/details version**, **Game Version**, **Where/When the bug happens**?';
 
+                case 'overall':
+                    return 'The overall data updates after the current combat ends. If you want it to update while in combat, you can use Dynamic Overall Data.';
+
                 case 'aggro':
-                    'How to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg';
+                    'Heres a guide on how to install Tiny Threat plugin: https://www.youtube.com/watch?v=8qD58jJPYrg';
 
                 case 'classic':
-                    return 'here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow';
+                    return 'Here is the link for Details! Classic: https://www.curseforge.com/wow/addons/details-damage-meter-classic-wow';
                 
                 case 'nickname':
-                    return `Update Details! and disable any weakaura modifiers for nicknames (like Nickname Extender).`;
+                    return 'Update Details! and disable any weakaura modifiers for nicknames, such as Nickname Extender.';
 
                 case 'elvui':
                     return `Go to ElvUI; AddonsSkins Options; disable chat embed or reduce it to one window, depending on your problem.`;
