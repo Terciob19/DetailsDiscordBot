@@ -48,7 +48,7 @@ function sendMessage(message, textToSend, user)
 function banUserForSpam(user, message)
 {
     // Ban a user by id (or with a user/guild member object)
-    guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
+    user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
     .then(banInfo => console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`))
     .catch(console.error);
 }
@@ -59,7 +59,7 @@ function handleBotSpamChannel(message)
     {
         if (!message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))) {
             banUserForSpam(message.member, message.content)
-            console.log(`Banned ${message.member} ${message.content}`)
+            console.log(`Banned ${message.member}/${message.member.tag}/${message.member.id} - ${message.content}`)
         } else {
             console.log(`HasRole ${message.member} - ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`)
         }
