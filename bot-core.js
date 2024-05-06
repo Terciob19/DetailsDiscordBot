@@ -16,7 +16,7 @@ const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
-const spamBotBaitChannel = = "1237093406124015737";
+const spamBotBaitChannel = "1237093406124015737";
 const roleAuthors = "702641998410154004";
 const roleDetailsAuthor = "505445195832098827";
 const roleMods = "504034889310666771";
