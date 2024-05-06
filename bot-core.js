@@ -16,6 +16,10 @@ const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
+const spamBotBaitChannel = = "1237093406124015737";
+const roleAuthors = "702641998410154004";
+const roleDetailsAuthor = "505445195832098827";
+const roleMods = "504034889310666771";
 
 const streamerRoleName = 'Patreon Legend';
 
@@ -38,6 +42,24 @@ function sendMessage(message, textToSend, user)
     else
     {
         return message.channel.send({ content: `${textToSend}` }).catch((err) => { console.log(err) });;
+    }
+}
+
+function banUserForSpam(user, message)
+{
+    // Ban a user by id (or with a user/guild member object)
+    guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
+    .then(banInfo => console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`))
+    .catch(console.error);
+}
+
+function handleBotSpamChannel(message)
+{
+    if (message.channel.id == spamBotBaitChannel)
+    {
+        if (!message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))) {
+            banUserForSpam(message.member, message.content)
+        }
     }
 }
 
@@ -217,6 +239,7 @@ botClient.on('messageCreate', async (message) => {
     //first letter isn't an exclamation point
     if (!message.content.startsWith('!')) 
     {
+        handleBotSpamChannel(message)
         return;
     }
 
