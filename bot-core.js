@@ -61,7 +61,7 @@ function handleBotSpamChannel(message)
             //banUserForSpam(message.member, message.content)
             console.log(`Banned ${message.member} ${message.content}`))
         } else {
-            console.log(`HasRole ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`))
+            console.log(`HasRole ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`)
         }
     }
 }
