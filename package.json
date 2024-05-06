@@ -3,7 +3,7 @@
   "description": "Bot for Discord Servers",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "main": "bot-core.js",
   "scripts": {
