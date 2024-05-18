@@ -47,10 +47,8 @@ function sendMessage(message, textToSend, user)
     }
 }
 
-function incrementBanCounter()
+function incrementBanCounter(channel)
 {
-    //const channel = botClient.channels.fetch(spamBotBaitChannel);
-    const channel = botClient.channels.fetch(modLogChannel);
     channel.messages.fetch(spamBotBaitWarningMessage)
     .then(msg => {
         const fetchedMsg = msg.first();
@@ -66,13 +64,13 @@ function incrementBanCounter()
     .catch(console.error);
 }
 
-function banUserForSpam(user, message)
+function banUserForSpam(user, message, channel)
 {
     // Ban a user by id (or with a user/guild member object)
     user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
     .then(banInfo => {
         console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`);
-        incrementBanCounter();
+        incrementBanCounter(channel);
     })
     .catch(console.error);
 }
@@ -82,7 +80,7 @@ function handleBotSpamChannel(message)
     if (message.channel.id == spamBotBaitChannel)
     {
         if (!message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))) {
-            banUserForSpam(message.member, message.content)
+            banUserForSpam(message.member, message.content, message.channel)
             console.log(`Banned ${message.member}/${message.member.tag}/${message.member.id} - ${message.content}`)
         } else {
             console.log(`HasRole ${message.member} - ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`)
@@ -290,7 +288,7 @@ botClient.on('messageCreate', async (message) => {
     
     if (command == 'testBanCount')
     {
-        incrementBanCounter();
+        incrementBanCounter(message.channel);
     }
 
 })
