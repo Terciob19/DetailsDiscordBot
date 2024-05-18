@@ -51,8 +51,11 @@ function incrementBanCounter(channel)
 {
     channel.messages.fetch(spamBotBaitWarningMessage)
     .then(fetchedMsg => {
+        console.log(fetchedMsg);
         const countStr = fetchedMsg.content.match(/Ban Count: ([0-9]+)/);
-        var count = parseInt(countStr, 10);
+        console.log(countStr);
+        var count = Number(countStr);
+        console.log(count);
         if (count) {
             count = count + 1;
             var content = fetchedMsg.content;
