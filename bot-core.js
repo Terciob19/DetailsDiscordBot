@@ -70,9 +70,9 @@ function banUserForSpam(user, message)
     // Ban a user by id (or with a user/guild member object)
     user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
     .then(banInfo => {
-        console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`));
+        console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`);
         incrementBanCounter();
-    }
+    })
     .catch(console.error);
 }
 
