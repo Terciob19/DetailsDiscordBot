@@ -50,13 +50,12 @@ function sendMessage(message, textToSend, user)
 function incrementBanCounter(channel)
 {
     channel.messages.fetch(spamBotBaitWarningMessage)
-    .then(msg => {
-        const fetchedMsg = msg.first();
-        const countStr = msg.content.match(/Ban Count: ([0-9]+)/);
+    .then(fetchedMsg => {
+        const countStr = fetchedMsg.content.match(/Ban Count: ([0-9]+)/);
         var count = parseInt(countStr, 10);
         if (count) {
             count = count + 1;
-            var content = msg.content;
+            var content = fetchedMsg.content;
             content.replace(/Ban Count: ([0-9]+)/g, `Ban Count: ${count}`)
             fetchedMsg.edit(content);
         }
