@@ -62,7 +62,8 @@ function incrementBanCounter()
             content.replace(/Ban Count: ([0-9]+)/g, `Ban Count: ${count}`)
             fetchedMsg.edit(content);
         }
-    });
+    })
+    .catch(console.error);
 }
 
 function banUserForSpam(user, message)
