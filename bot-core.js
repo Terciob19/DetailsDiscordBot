@@ -17,7 +17,7 @@ const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 const spamBotBaitChannel = "1237093406124015737";
-const spamBotBaitWarningMessage = "000";
+const spamBotBaitWarningMessage = "00";
 const roleAuthors = "702641998410154004";
 const roleDetailsAuthor = "505445195832098827";
 const roleMods = "504034889310666771";
@@ -295,8 +295,8 @@ botClient.on('messageCreate', async (message) => {
     
     if (command == 'testBanCount')
     {
-        const channel = await botClient.channels.fetch(spamBotBaitChannel);
-        incrementBanCounter(channel);
+        //const channel = await botClient.channels.fetch(spamBotBaitChannel);
+        incrementBanCounter(message.channel);
     }
 
 })
