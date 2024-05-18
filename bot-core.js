@@ -51,7 +51,7 @@ function incrementBanCounter()
 {
     //const channel = botClient.channels.fetch(spamBotBaitChannel);
     const channel = botClient.channels.fetch(modLogChannel);
-    channel.fetchMessages({around: spamBotBaitWarningMessage, limit: 1})
+    channel.messages.fetch(spamBotBaitWarningMessage)
     .then(msg => {
         const fetchedMsg = msg.first();
         const countStr = msg.content.match(/Ban Count: ([0-9]+)/);
