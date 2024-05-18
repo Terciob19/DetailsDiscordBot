@@ -49,8 +49,8 @@ function sendMessage(message, textToSend, user)
 
 function incrementBanCounter()
 {
-    //const channel = await botClient.channels.fetch(spamBotBaitChannel);
-    const channel = await botClient.channels.fetch(modLogChannel);
+    //const channel = botClient.channels.fetch(spamBotBaitChannel);
+    const channel = botClient.channels.fetch(modLogChannel);
     channel.fetchMessages({around: spamBotBaitWarningMessage, limit: 1})
     .then(msg => {
         const fetchedMsg = msg.first();
