@@ -17,6 +17,8 @@ const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 const spamBotBaitChannel = "1237093406124015737";
+//const spamBotBaitWarningMessage = "1237100480602050590";
+const spamBotBaitWarningMessage = "1241501020819947624";
 const roleAuthors = "702641998410154004";
 const roleDetailsAuthor = "505445195832098827";
 const roleMods = "504034889310666771";
@@ -45,11 +47,32 @@ function sendMessage(message, textToSend, user)
     }
 }
 
+function incrementBanCounter()
+{
+    //const channel = await botClient.channels.fetch(spamBotBaitChannel);
+    const channel = await botClient.channels.fetch(modLogChannel);
+    channel.fetchMessages({around: spamBotBaitWarningMessage, limit: 1})
+    .then(msg => {
+        const fetchedMsg = msg.first();
+        const countStr = msg.content.match(/Ban Count: ([0-9]+)/);
+        var count = parseInt(countStr, 10);
+        if (count) {
+            count = count + 1;
+            var content = msg.content;
+            content.replace(/Ban Count: ([0-9]+)/g, `Ban Count: ${count}`)
+            fetchedMsg.edit(content);
+        }
+    });
+}
+
 function banUserForSpam(user, message)
 {
     // Ban a user by id (or with a user/guild member object)
     user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
-    .then(banInfo => console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`))
+    .then(banInfo => {
+        console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`));
+        incrementBanCounter();
+    }
     .catch(console.error);
 }
 
@@ -263,12 +286,17 @@ botClient.on('messageCreate', async (message) => {
     const response = getCommandResponse(parentId, command);
     
     if (response) sendMessage(message, response, user);
+    
+    if (command == 'testBanCount')
+    {
+        incrementBanCounter();
+    }
 
 })
 
 botClient.on('guildBanAdd', async (guildBan) => {
     //if (guildBan.partial) await guildBan.fetch(); //this is causing 'DiscordAPIError: Missing Permissions'
-    //console.log(`guildBanAdd:`);
+    // like thaconsole.log(`guildBanAdd:`);
     //console.log(guildBan);
     
     const logs = await botClient.channels.fetch(modLogChannel);
