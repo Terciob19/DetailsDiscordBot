@@ -54,20 +54,18 @@ function incrementBanCounter(channel)
         const countStr = fetchedMsg.content.match(/Ban Count: ([0-9]+)/);
         if (countStr && countStr[1])
         {
-            console.log(countStr[1]);
             var count = parseInt(countStr[1], 10);
-            console.log(count);
             if (count) {
                 count = count + 1;
                 var content = fetchedMsg.content;
-                content.replace(/Ban Count: ([0-9]+)/g, `Ban Count: ${count}`)
+                content = content.replace(/Ban Count: ([0-9]+)/g, `Ban Count: ${count}`)
                 fetchedMsg.edit(content);
             }
         }
     }, reason => {
         console.log(reason);
-        console.log("not found, creating");
-        channel.send("Ban Count: 19");
+        console.log("ban count not found, creating");
+        channel.send("Ban Count: 0");
     })
     .catch(console.error);
 }
