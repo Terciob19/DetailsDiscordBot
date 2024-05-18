@@ -17,8 +17,7 @@ const categoryDetailsDamageMeter = "503973116163391488";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 const spamBotBaitChannel = "1237093406124015737";
-//const spamBotBaitWarningMessage = "1241518114219233380";
-const spamBotBaitWarningMessage = "1241519166381621249";
+const spamBotBaitWarningMessage = "1241518114219233380";
 const roleAuthors = "702641998410154004";
 const roleDetailsAuthor = "505445195832098827";
 const roleMods = "504034889310666771";
@@ -65,7 +64,7 @@ function incrementBanCounter(channel)
     }, reason => {
         console.log(reason);
         console.log("ban count not found, creating");
-        channel.send("Ban Count: 0");
+        channel.send("Ban Count: 1");
     })
     .catch(console.error);
 }
@@ -291,12 +290,6 @@ botClient.on('messageCreate', async (message) => {
     const response = getCommandResponse(parentId, command);
     
     if (response) sendMessage(message, response, user);
-    
-    if (command == 'testBanCount')
-    {
-        //const channel = await botClient.channels.fetch(spamBotBaitChannel);
-        incrementBanCounter(message.channel);
-    }
 
 })
 
