@@ -132,7 +132,9 @@ function getCommandResponse(parentId, command)
                     return `Look at the top left corner of the options menu, there's a scale slider. Right click it, type the value you want, e.g. 1.0, and press enter.`;
 
                 case 'error':
-                    return `First use **/plater** to grab the version of Plater, after that active errors with the command: **/console scriptErrors 1** and **/reload**. When an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;                    
+                    return `First use \`/plater version\` to grab the version of Plater.
+                    After that, get the Addons **BugSack** and **BugGrabber**, restart the game and reproduce the issue. You will find a small "bag" on your minimap. If it is red, you captured at least one error. You can navigate the errors with the next/prev buttons.
+                    As an alternative, active errors with the command: \`/console scriptErrors 1\` and \`/reload\`. In this case, when an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
 
                 case 'alpha':
                     return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
