@@ -280,8 +280,8 @@ botClient.on('messageCreate', async (message) => {
     //first letter isn't an exclamation point
     if (!message.content.startsWith('!')) 
     {
+        const logs = await botClient.channels.fetch(modLogChannel);
         handleBotSpamChannel(message).catch((err) => {
-            const logs = await botClient.channels.fetch(modLogChannel);
             logs.send({ content: `${err}` }).catch((err) => { console.log(err) })
         });
         return;
