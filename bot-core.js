@@ -282,7 +282,7 @@ botClient.on('messageCreate', async (message) => {
     {
         const logs = await botClient.channels.fetch(modLogChannel);
         handleBotSpamChannel(message).catch((err) => {
-            logs.send({ content: `${err}` }).catch((err) => { console.log(err) })
+            logs.send({ embed: createErrorEmbed('Issue during Bot Spam handling', err) }).catch((err) => { console.log(err) })
         });
         return;
     }
@@ -393,9 +393,9 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
 });
 
 
-botClient.on('uncaughtException', (reason, parameter) => {
+process.on('uncaughtException', (error) => {
     const logs = await botClient.channels.fetch(modLogChannel);
-    logs.send({ embeds: createErrorEmbed(reason, parameter) }).catch((err) => { console.log(err) });
+    logs.send({ embeds: createErrorEmbed('General Error', error) }).catch((err) => { console.log(err) });
 })
 
 //token for the login process
