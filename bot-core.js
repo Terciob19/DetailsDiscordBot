@@ -52,7 +52,7 @@ function createBanEmbed(user, executor, reason) {
         .setTimestamp()
         //.setFooter({text: "::interrobang:"});
     if (executor) banEmbed.addFields( {name: "Executor:", value:  `${executor}/${executor.tag}`});
-    banEmbed.addFields({name: "Reason:", value: reason},)
+    if (reason) banEmbed.addFields({name: "Reason:", value: reason});
     return banEmbed;
 }
 
