@@ -34,7 +34,7 @@ function sleep(ms) {
   });
 }
 
-function createErrorEmbed(reason: any, parameter: any) {
+function createErrorEmbed(reason, parameter) {
     return new MessageEmbed()
         .setColor("RED")
         .setTitle("?? Error")
