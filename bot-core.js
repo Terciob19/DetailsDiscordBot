@@ -89,7 +89,12 @@ function banUserForSpam(user, message, channel)
         console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`);
         incrementBanCounter(channel);
     })
-    .catch(console.error);
+    .catch(catch (err) {
+            const logs = await botClient.channels.fetch(modLogChannel);
+            const embed = createErrorEmbed('Issue during Bot Spam handling', err.stack);
+            logs.send({ embeds: [embed] }).catch((err) => { console.log(err) })
+        }
+    );
 }
 
 function handleBotSpamChannel(message)
