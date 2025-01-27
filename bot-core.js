@@ -97,7 +97,7 @@ function handleBotSpamChannel(message)
     if (message.channel.id == spamBotBaitChannel)
     {
         if (!message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))) {
-            banUserForSpam(message.member, message.content, message.channel)
+            //banUserForSpam(message.member, message.content, message.channel)
             console.log(`Banned ${message.member}/${message.member.tag}/${message.member.id} - ${message.content}`)
         } else {
             console.log(`HasRole ${message.member} - ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`)
