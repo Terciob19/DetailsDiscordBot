@@ -5,7 +5,7 @@
 //const botClient = new Discord.Client();
 
 //grab the discord 'library'
-const { Client, GatewayIntentBits, MessageAttachment, MessageEmbed, WebhookClient, ChannelType, Partials, AuditLogEvent, Events } = require ('discord.js');
+const { Client, GatewayIntentBits, MessageAttachment, EmbedBuilder, WebhookClient, ChannelType, Partials, AuditLogEvent, Events } = require ('discord.js');
 //make the bot client object and register intents (events)
 const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildBans], partials: [Partials.GuildMember] });
 
@@ -35,23 +35,15 @@ function sleep(ms) {
 }
 
 function createErrorEmbed(reason, parameter) {
-//    return new MessageEmbed()
-//        .setColor("RED")
-//        .setTitle("?? Error")
-//        .setDescription("Looks like something went wrong!\n\n" + reason + "\n\n" + parameter)
-//        .setTimestamp()
-//        .setFooter({text: ":interrobang:"});
-    return {
-        color: "RED",
-        title: "Error!",
-        description: reason,
-        fields: [
-            {
-                name: "Stack trace:",
-                value: parameter,
-            },
-        ],
-    }
+    return new EmbedBuilder()
+        .setColor(0xff0000)
+        .setTitle("?? Error")
+        .setDescription("Looks like something went wrong!\n\n" + reason)
+        .addFields(
+            {name: "Stack trace:", value: parameter},
+        )
+        .setTimestamp()
+        .setFooter({text: ":interrobang:"});
 }
 
 function sendMessage(message, textToSend, user)
@@ -413,7 +405,8 @@ process.on('uncaughtException', async (error, origin) => {
     try {
         console.log(error);
         const logs = await botClient.channels.fetch(modLogChannel);
-        logs.send({ embeds: [createErrorEmbed(error, error.stack)] });
+        const embed = createErrorEmbed(error, error.stack);
+        logs.send({ embeds: [embed] });
         //logs.send({ content: `${error} ${error.stack}` });
     } catch (err) {
         console.log(err);
