@@ -393,7 +393,7 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
 });
 
 
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', async (error) => {
     const logs = await botClient.channels.fetch(modLogChannel);
     logs.send({ embeds: createErrorEmbed('General Error', error) }).catch((err) => { console.log(err) });
 })
