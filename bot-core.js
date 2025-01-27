@@ -41,18 +41,18 @@ function createErrorEmbed(reason, parameter) {
         .setDescription("Looks like something went wrong!")
         .addFields({name: "Stack trace:", value: parameter},)
         .setTimestamp()
-        .setFooter({text: "::interrobang:"});
+        //.setFooter({text: "::interrobang:"});
 }
 
 function createBanEmbed(user, executor, reason) {
     const banEmbed = new EmbedBuilder()
         .setColor(0x0077B6)
         .setTitle("We got em! New Ban!")
-        .setDescription(`${user}/${user.tag}/${user.id} was banned.`)
-        .addFields({name: "Reason:", value: reason},)
+        .setDescription(`${user}/${user.tag}/${user.id} was banned!`)
         .setTimestamp()
-        .setFooter({text: "::interrobang:"});
+        //.setFooter({text: "::interrobang:"});
     if (executor) banEmbed.addFields( {name: "Executor:", value:  `${executor}/${executor.tag}`});
+    banEmbed.addFields({name: "Reason:", value: reason},)
     return banEmbed;
 }
 
@@ -350,13 +350,13 @@ botClient.on('guildBanAdd', async (guildBan) => {
     if (banLog && banLog.target.id === user.id) {
         var { executor, target, reason } = banLog;
         if (!reason) reason = '<No reason given>';
-        logs.send({ content: `${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'` });
+        //logs.send({ content: `${user}/${user.tag}/${user.id} was banned by ${executor}/${executor.tag} with reason: '${reason}'` });
         const banEmbed = createBanEmbed(user, executor, reason);
         logs.send({ embeds: [banEmbed]});
     } else {
         var reason = guildBan.reason;
         if (!reason) reason = '<No reason given>';
-        logs.send({ content: `${user}/${user.tag}/${user.id} was banned with reason: '${reason}'` });
+        //logs.send({ content: `${user}/${user.tag}/${user.id} was banned with reason: '${reason}'` });
         const banEmbed = createBanEmbed(user, undefined, reason);
         logs.send({ embeds: [banEmbed]});
     }
