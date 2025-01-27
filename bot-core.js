@@ -34,6 +34,15 @@ function sleep(ms) {
   });
 }
 
+function createErrorEmbed(reason: any, parameter: any) {
+    return new MessageEmbed()
+        .setColor("RED")
+        .setTitle("?? Error")
+        .setDescription("Looks like something went wrong!\n\n" + reason + "\n\n" + parameter)
+        .setTimestamp()
+        .setFooter({text: ":interrobang:"});
+}
+
 function sendMessage(message, textToSend, user)
 {
     if (user)
@@ -271,7 +280,10 @@ botClient.on('messageCreate', async (message) => {
     //first letter isn't an exclamation point
     if (!message.content.startsWith('!')) 
     {
-        handleBotSpamChannel(message)
+        handleBotSpamChannel(message).catch((err) => {
+            const logs = await botClient.channels.fetch(modLogChannel);
+            logs.send({ content: `${err}` }).catch((err) => { console.log(err) })
+        });
         return;
     }
 
@@ -379,6 +391,12 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
         //member.voice.setChannel(channel);
     }
 });
+
+
+botClient.on('uncaughtException', (reason, parameter) => {
+    const logs = await botClient.channels.fetch(modLogChannel);
+    logs.send({ embeds: createErrorEmbed(reason, parameter) }).catch((err) => { console.log(err) });
+})
 
 //token for the login process
 botClient.login(process.env.TOKENID);
