@@ -401,8 +401,6 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
 process.on('uncaughtException', async (error, origin) => {
     const logs = await botClient.channels.fetch(modLogChannel);
     //logs.send({ embeds: createErrorEmbed(error, origin) }).catch((err) => { console.log(err) });
-    logs.send({ content: `${error} ${origin} ${origin.stack}` }).catch((err) => { console.log(err) });
-    logs.send({ content: `${error} ${origin} ${origin.prototype.stack}` }).catch((err) => { console.log(err) });
     error.captureStackTrace();
     logs.send({ content: `${error} ${origin} ${origin.stack}` }).catch((err) => { console.log(err) });
     logs.send({ content: `${error} ${origin} ${origin.prototype.stack}` }).catch((err) => { console.log(err) });
