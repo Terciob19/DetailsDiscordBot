@@ -37,8 +37,8 @@ function sleep(ms) {
 function createErrorEmbed(reason, parameter) {
     return new EmbedBuilder()
         .setColor(0xff0000)
-        .setTitle("?? Error")
-        .setDescription("Looks like something went wrong!\n\n" + reason)
+        .setTitle("Bot Error: " + reason)
+        .setDescription("Looks like something went wrong!")
         .addFields(
             {name: "Stack trace:", value: parameter},
         )
@@ -236,7 +236,6 @@ botClient.once('ready', () => {
     botClient.guilds.cache.get(discordDetails).commands.create(commandFAQ);
     
     console.log("I am ready!");
-    testThis();
 })
 
 botClient.on('interactionCreate', async (interaction) => {
