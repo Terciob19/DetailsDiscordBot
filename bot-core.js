@@ -251,7 +251,7 @@ botClient.once('ready', () => {
     
     console.log("I am ready!");
     
-    testThis();
+    //testThis();
 })
 
 botClient.on('interactionCreate', async (interaction) => {
