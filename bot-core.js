@@ -89,7 +89,7 @@ function banUserForSpam(user, message, channel)
         console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`);
         incrementBanCounter(channel);
     })
-    .catch(catch (err) {
+    .catch((err) => {
             const logs = await botClient.channels.fetch(modLogChannel);
             const embed = createErrorEmbed('Issue during Bot Spam handling', err.stack);
             logs.send({ embeds: [embed] }).catch((err) => { console.log(err) })
@@ -102,7 +102,7 @@ function handleBotSpamChannel(message)
     if (message.channel.id == spamBotBaitChannel)
     {
         if (!message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))) {
-            //banUserForSpam(message.member, message.content, message.channel)
+            banUserForSpam(message.member, message.content, message.channel)
             console.log(`Banned ${message.member}/${message.member.tag}/${message.member.id} - ${message.content}`)
         } else {
             console.log(`HasRole ${message.member} - ${message.member.roles.cache.some(role => (role.id === roleAuthors || role.id === roleDetailsAuthor || role.id === roleMods))}`)
