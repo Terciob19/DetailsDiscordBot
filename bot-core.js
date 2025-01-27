@@ -289,7 +289,8 @@ botClient.on('messageCreate', async (message) => {
         } catch (err) {
             const logs = await botClient.channels.fetch(modLogChannel);
             logs.send({ content: `${err} ${err.stack}` }).catch((err) => { console.log(err) });
-            //logs.send({ embed: createErrorEmbed('Issue during Bot Spam handling', err) }).catch((err) => { console.log(err) })
+            const embed = createErrorEmbed('Issue during Bot Spam handling', err.stack);
+            logs.send({ embeds: [embed] }).catch((err) => { console.log(err) })
         }
         return;
     }
