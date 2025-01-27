@@ -403,7 +403,6 @@ process.on('uncaughtException', async (error, origin) => {
     //logs.send({ embeds: createErrorEmbed(error, origin) });
     console.log(error, origin);
     logs.send({ content: `${error} ${origin} ${origin.stack}` });
-    logs.send({ content: `${error} ${origin} ${origin.prototype.stack}` });
 })
 
 //token for the login process
