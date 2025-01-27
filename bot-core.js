@@ -402,7 +402,6 @@ process.on('uncaughtException', async (error, origin) => {
     const logs = await botClient.channels.fetch(modLogChannel);
     //logs.send({ embeds: createErrorEmbed(error, origin) });
     console.log(error, origin);
-    error.captureStackTrace();
     logs.send({ content: `${error} ${origin} ${origin.stack}` });
     logs.send({ content: `${error} ${origin} ${origin.prototype.stack}` });
 })
