@@ -410,10 +410,14 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
 
 
 process.on('uncaughtException', async (error, origin) => {
-    const logs = await botClient.channels.fetch(modLogChannel);
-    console.log(error, origin);
-    logs.send({ embeds: createErrorEmbed(error, error.stack) });
-    //logs.send({ content: `${error} ${error.stack}` });
+    try {
+        console.log(error);
+        const logs = await botClient.channels.fetch(modLogChannel);
+        logs.send({ embeds: [createErrorEmbed(error, error.stack)] });
+        //logs.send({ content: `${error} ${error.stack}` });
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 //token for the login process
