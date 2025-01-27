@@ -84,7 +84,7 @@ function incrementBanCounter(channel)
 function banUserForSpam(user, message, channel)
 {
     // Ban a user by id (or with a user/guild member object)
-    user.guild.bans.bulkCreate(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }); //6h
+    user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }); //6h
     .catch( async (err) => {
             const logs = await botClient.channels.fetch(modLogChannel);
             const embed = createErrorEmbed('Issue during Bot Spam handling', err.stack);
