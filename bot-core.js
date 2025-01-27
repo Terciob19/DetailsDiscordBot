@@ -35,12 +35,23 @@ function sleep(ms) {
 }
 
 function createErrorEmbed(reason, parameter) {
-    return new MessageEmbed()
-        .setColor("RED")
-        .setTitle("?? Error")
-        .setDescription("Looks like something went wrong!\n\n" + reason + "\n\n" + parameter)
-        .setTimestamp()
-        .setFooter({text: ":interrobang:"});
+//    return new MessageEmbed()
+//        .setColor("RED")
+//        .setTitle("?? Error")
+//        .setDescription("Looks like something went wrong!\n\n" + reason + "\n\n" + parameter)
+//        .setTimestamp()
+//        .setFooter({text: ":interrobang:"});
+    return {
+        color: "RED",
+        title: "Error!",
+        description: reason,
+        fields: [
+            {
+                name: "Stack trace:",
+                value: parameter,
+            },
+        ],
+    }
 }
 
 function sendMessage(message, textToSend, user)
@@ -287,7 +298,7 @@ botClient.on('messageCreate', async (message) => {
         } catch (err) {
             const logs = await botClient.channels.fetch(modLogChannel);
             logs.send({ content: `${err} ${err.stack}` }).catch((err) => { console.log(err) });
-            logs.send({ embed: createErrorEmbed('Issue during Bot Spam handling', err) }).catch((err) => { console.log(err) })
+            //logs.send({ embed: createErrorEmbed('Issue during Bot Spam handling', err) }).catch((err) => { console.log(err) })
         }
         return;
     }
