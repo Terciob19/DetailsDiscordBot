@@ -233,6 +233,7 @@ botClient.once('ready', () => {
     botClient.guilds.cache.get(discordDetails).commands.create(commandFAQ);
     
     console.log("I am ready!");
+    testThis();
 })
 
 botClient.on('interactionCreate', async (interaction) => {
@@ -393,9 +394,11 @@ botClient.on('presenceUpdate', async (oldPresence, newPresence) =>
 });
 
 
-process.on('uncaughtException', async (error) => {
+process.on('uncaughtException', async (error, origin) => {
     const logs = await botClient.channels.fetch(modLogChannel);
-    logs.send({ embeds: createErrorEmbed('General Error', error) }).catch((err) => { console.log(err) });
+    //logs.send({ embeds: createErrorEmbed(error, origin) }).catch((err) => { console.log(err) });
+    logs.send({ content: `${error} ${origin}` }).catch((err) => { console.log(err) });
+    console.log(error, origin);
 })
 
 //token for the login process
