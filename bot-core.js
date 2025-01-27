@@ -402,8 +402,7 @@ process.on('uncaughtException', async (error, origin) => {
     const logs = await botClient.channels.fetch(modLogChannel);
     //logs.send({ embeds: createErrorEmbed(error, origin) });
     console.log(error, origin);
-    logs.send({ content: error });
-    logs.send({ content: origin });
+    logs.send({ content: `${error} ${error.stack} ${origin} ${origin.stack}` });
 })
 
 //token for the login process
