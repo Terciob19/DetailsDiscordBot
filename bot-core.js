@@ -7,7 +7,7 @@
 //grab the discord 'library'
 const { Client, GatewayIntentBits, MessageAttachment, EmbedBuilder, WebhookClient, ChannelType, Partials, AuditLogEvent, Events } = require ('discord.js');
 //make the bot client object and register intents (events)
-const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildBans], partials: [Partials.GuildMember] });
+const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildModeration], partials: [Partials.GuildMember] });
 
 
 //categories
@@ -93,15 +93,16 @@ function incrementBanCounter(channel)
 function banUserForSpam(user, message, channel)
 {
     // Ban a user by id (or with a user/guild member object)
-    user.guild.bans.bulkCreate([user], { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
-    .then(result => {
-        console.log(`Banned ${result.bannedUsers.length} users, failed to ban ${result.failedUsers.length} users.`);
-        if (result.bannedUsers.length > 0) incrementBanCounter(channel);
+    user.guild.bans.create(user, { deleteMessageSeconds: 6 * 60 * 60, reason: `#spam-bot-bait: ${message}` }) //6h
+    .then(banInfo  => {
+        console.log(`Banned ${banInfo.user?.tag ?? banInfo.tag ?? banInfo}`);
+        incrementBanCounter(channel);
     })
     .catch( async (err) => {
             const logs = await botClient.channels.fetch(modLogChannel);
             const embed = createErrorEmbed('Issue during Bot Spam handling', err.stack);
             logs.send({ embeds: [embed] }).catch((err) => { console.log(err) })
+            console.log(err);
         }
     );
 }
