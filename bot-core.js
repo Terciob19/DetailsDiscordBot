@@ -7,7 +7,18 @@
 //grab the discord 'library'
 const { Client, GatewayIntentBits, MessageAttachment, EmbedBuilder, WebhookClient, ChannelType, Partials, AuditLogEvent, Events } = require ('discord.js');
 //make the bot client object and register intents (events)
-const botClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildModeration], partials: [Partials.GuildMember] });
+const botClient = new Client({ 
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildModeration
+    ],
+    partials: [
+        Partials.GuildMember,
+    ]
+});
 
 
 //categories
