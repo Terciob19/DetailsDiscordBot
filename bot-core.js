@@ -160,11 +160,10 @@ function getCommandResponse(parentId, command)
                     return `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`
                 
                 case 'version':
-                    return `Please verify that you are running the correct versions of Plater AND Details (if you\'re using it).
-Twitch tends to "update" to wrong versions, e.g. classic for retail installations.
+                    return `Please verify that you are running the correct and latest versions of Plater AND Details (if you\'re using it).
 Both Details and Plater need to be in the correct version for your WoW installation.
-Newer Plater versions support the following chat command to get version information: \`/plater version\`
-Please provide this version info, if available.`;
+Plater supports the following chat command to get version information: \`/plater version\`
+Please provide this version info.`;
 
                 case 'scale':
                     return `Look at the top left corner of the options menu, there's a scale slider. Right click it, type the value you want, e.g. 1.0, and press enter.`;
