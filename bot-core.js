@@ -240,11 +240,12 @@ As an alternative, active errors with the command: \`/console scriptErrors 1\` a
             {
                 case 'version':
                     return `Please verify that you are running the correct and latest versions of CUE.
-You may find the version information on the About tab in the CUE options panel.
+CUE supports the following chat command to get version information: \`/cue version\`
+You may find the version information on the About tab in the CUE options panel as well.
 Please provide this version info.`;
 
                 case 'error':
-                    return `Grab the version info from the About tab in the options and provide this as info.
+                    return `Grab the version info from the About tab in the options panel or from the command \`/cue version\` and provide this as info.
 After that, get the Addons **BugSack** and **BugGrabber**, restart the game and reproduce the issue. You will find a small "bag" on your minimap. If it is red, you captured at least one error. You can navigate the errors with the next/prev buttons.`;
 
                 case 'alpha':
