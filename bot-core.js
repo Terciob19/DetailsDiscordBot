@@ -25,6 +25,7 @@ const botClient = new Client({
 const categoryOtherAddons = "503975658708402206";
 const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
+const categoryCUE = "1476317556716605704";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 const spamBotBaitChannel = "1237093406124015737";
@@ -160,8 +161,7 @@ function getCommandResponse(parentId, command)
                     return `https://www.curseforge.com/wow/addons/plater-nameplates/pages/faq`
                 
                 case 'version':
-                    return `Please verify that you are running the correct and latest versions of Plater AND Details (if you\'re using it).
-Both Details and Plater need to be in the correct version for your WoW installation.
+                    return `Please verify that you are running the correct and latest versions of Plater.
 Plater supports the following chat command to get version information: \`/plater version\`
 Please provide this version info.`;
 
@@ -232,6 +232,23 @@ As an alternative, active errors with the command: \`/console scriptErrors 1\` a
                 case 'fade':
                     return `If the window is fading while in combat, check: Options > Automation > disable enabled options there. check: Options > Auto Run Code > On Enter Combat (dropdown) > Delete code there and hit save.`;
 
+            }
+            break;
+
+        case categoryCUE:
+            switch (command)
+            {
+                case 'version':
+                    return `Please verify that you are running the correct and latest versions of CUE.
+You may find the version information on the About tab in the CUE options panel.
+Please provide this version info.`;
+
+                case 'error':
+                    return `Grab the version info from the About tab in the options and provide this as info.
+After that, get the Addons **BugSack** and **BugGrabber**, restart the game and reproduce the issue. You will find a small "bag" on your minimap. If it is red, you captured at least one error. You can navigate the errors with the next/prev buttons.`;
+
+                case 'alpha':
+                    return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
             }
             break;
     }
