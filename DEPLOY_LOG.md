@@ -77,15 +77,22 @@ discord.js v14 deprecation warning (`ready` → `clientReady`, fires in v15 only
 Verify in-app: bot shows online in the Details! Discord; `/faq` slash command
 registers (created guild-scoped on `ready`).
 
-### 6. Decommission Heroku — PENDING (operator)
+### 6. Decommission Heroku — DONE
+Operator confirmed the old Heroku app is disabled (2026-06-27). Only one gateway
+session now runs (the VPS container). Token was reset at cutover, so any stale
+Heroku dyno couldn't reconnect anyway.
 Once verified live here, remove the bot from the old Heroku app
 (`dashboard.heroku.com/apps/details-discord-bot`) so two instances don't both
 connect (double responses / double bans). Only ONE gateway session should run.
 
-## CI follow-up (auto-deploy on push) — NOT YET DONE
+## CI follow-up (auto-deploy on push) — DONE (verified green 2026-06-27)
 
 Chosen approach: **GitHub Actions push-deploy** (SSH from the runner; no inbound
-surface on the box). To enable:
+surface on the box). `.github/workflows/deploy.yml` is live; pushing to `master`
+auto-rebuilds + recreates the container. The deploy script force-syncs
+(`git fetch` + `git reset --hard origin/master` + `git clean -fd`) rather than
+`git pull` — a stray untracked `Dockerfile` from the first manual deploy had
+aborted a plain pull. How it was enabled:
 1. Generate a **dedicated** deploy keypair (not the operator's personal key):
    `ssh-keygen -t ed25519 -f deploy_key -N ''`.
 2. Append `deploy_key.pub` to the box's `/root/.ssh/authorized_keys`.
