@@ -1,0 +1,33 @@
+name: Deploy bot to VPS
+
+# Auto-deploy on every push to master. The runner SSHes into the VPS
+# (177.153.194.191 / authtails02), pulls the new code, rebuilds the Docker
+# image and restarts the container. No inbound surface is opened on the box.
+#
+# Requires repo secret DEPLOY_SSH_KEY = the PRIVATE half of the dedicated
+# ed25519 deploy key whose public half is in the box's /root/.ssh/authorized_keys.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {}   # allow manual runs from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 177.153.194.191
+          username: root
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd /root/details-discord-bot
+            git pull --ff-only
+            docker build -t details-discord-bot .
+            docker rm -f details-discord-bot 2>/dev/null || true
+            set -a; . /root/discord-bot.env; set +a
+            docker run -d --name details-discord-bot --restart unless-stopped -e TOKENID details-discord-bot
+            docker ps --filter name=details-discord-bot --format '{{.Names}} {{.Status}}'
