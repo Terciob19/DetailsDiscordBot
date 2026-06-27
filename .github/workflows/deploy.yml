@@ -25,7 +25,11 @@ jobs:
           script: |
             set -e
             cd /root/details-discord-bot
-            git pull --ff-only
+            # Force-sync to origin (a deploy box should always mirror the repo,
+            # never be blocked by local cruft like an untracked Dockerfile).
+            git fetch origin master
+            git reset --hard origin/master
+            git clean -fd
             docker build -t details-discord-bot .
             docker rm -f details-discord-bot 2>/dev/null || true
             set -a; . /root/discord-bot.env; set +a
