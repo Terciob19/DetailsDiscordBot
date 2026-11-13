@@ -26,6 +26,7 @@ const categoryOtherAddons = "503975658708402206";
 const categoryPlaterNameplates = "503974893558169611";
 const categoryDetailsDamageMeter = "503973116163391488";
 const categoryCUE = "1476317556716605704";
+const categoryPlaterUnitFrames = "1567692350325784626";
 const categoryMods = "821051201142652948";
 const modLogChannel = "821051497525542923";
 const spamBotBaitChannel = "1237093406124015737";
@@ -142,6 +143,7 @@ function getCommandResponse(parentId, command)
                 case 'commands':
                 return `General: faq
                 Plater: version, scale, error, alpha
+                Plater UnitFrames: version, error, alpha
                 Details: report, aggro, classic, nickname, elvui, mythic, reinstall, scale, alpha, error, reset, skin, combatlog, version, fade`;
             }
             break;
@@ -247,6 +249,24 @@ Please provide this version info.`;
                 case 'error':
                     return `Grab the version info from the About tab in the options panel or from the command \`/cue version\` and provide this as info.
 After that, get the Addons **BugSack** and **BugGrabber**, restart the game and reproduce the issue. You will find a small "bag" on your minimap. If it is red, you captured at least one error. You can navigate the errors with the next/prev buttons.`;
+
+                case 'alpha':
+                    return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
+            }
+            break;
+
+        case categoryPlaterUnitFrames:
+            switch (command)
+            {
+                case 'version':
+                    return `Please verify that you are running the correct and latest versions of Plater UnitFrames.
+Plater UnitFrames supports the following chat command to get version information: \`/puf version\`
+Please provide this version info.`;
+
+                case 'error':
+                    return `First use \`/puf version\` to grab the version of Plater UnitFrames.
+After that, get the Addons **BugSack** and **BugGrabber**, restart the game and reproduce the issue. You will find a small "bag" on your minimap. If it is red, you captured at least one error. You can navigate the errors with the next/prev buttons.
+As an alternative, active errors with the command: \`/console scriptErrors 1\` and \`/reload\`. In this case, when an error occurs, a window with debug info is shown, note this window has arrows to nagivate among all errors occurred.`;
 
                 case 'alpha':
                     return `To get an alpha version: right click the addon name on your favorite app, Release Type > Alpha. https://i.imgur.com/ghIQ7jg.png`;
